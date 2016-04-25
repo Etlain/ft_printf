@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/04/25 18:38:00 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/04/25 18:50:52 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,16 @@ int	ft_modifier(t_format *format, char *str, int *i)
 	return (1);
 }
 
-void	format_init(t_format *format)
+t_format	*format_init()
 {
+	t_format *format;
+
+	format = (t_format *)malloc(sizeof(t_format));
 	format->flags = NULL;
 	format->width = NULL;
 	format->precision = NULL;
 	format->modifier = NULL;
+	return (format);
 }
 
 void	ft_putformat(t_format *format) // a effacer
@@ -114,8 +118,7 @@ void	ft_format(va_list lst, char *str, int *i)
 {
 	t_format *format;
 	
-	format = (t_format *)malloc(sizeof(t_format));
-	format_init(format);
+	format = format_init();
 	while (str[*i] != '\0')
 	{
 		ft_flags(format, str[*i], i);
