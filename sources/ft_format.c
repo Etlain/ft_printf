@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/04/24 23:39:40 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/04/25 18:38:00 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	ft_wp(t_format *format, char *str, int *i) //ajout condition '.' pour preci
 		ft_strncat(tmp, &str[*i], j - *i);
 		*i = j;
 	}
-	else if (str[*i] == '#')
-		tmp = "#";
+	else if (str[*i] == '*')
+		tmp = "*";
 	else
 		return ;
 	b == 1 ? format->precision = tmp : (format->width = tmp);
@@ -98,6 +98,7 @@ void	format_init(t_format *format)
 
 void	ft_putformat(t_format *format) // a effacer
 {
+	ft_putchar('\n');
 	ft_putendl("format :");
 	ft_putstr("flags : ");
 	ft_putendl(format->flags);
