@@ -44,12 +44,13 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME):
-	gcc -c $(addprefix $(PATH_SRC), $(SRC))
-	gcc -c $(addprefix $(PATH_LIB), $(LIB))
-	ar -rc $(NAME) $(O_SRC) $(O_LIB)
+	make -C $(PATH_SRC)
+	make -C $(PATH_LIB)
+	ar -rc $(NAME) $(addprefix $(PATH_SRC), $(O_SRC)) $(addprefix $(PATH_LIB), $(O_LIB))
 
 clean:
-	rm -rf $(O_SRC) $(O_LIB)
+	make clean -C $(PATH_SRC)
+	make clean -C $(PATH_LIB)
 
 fclean: clean
 	rm -rf $(NAME)
