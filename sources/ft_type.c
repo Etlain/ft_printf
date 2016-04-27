@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/04/25 22:15:56 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/04/27 22:42:41 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_truc2()
 }
 */
 
-char	*add_wp(t_format format, va_list lst, char *type) // reflechir pour wchat_t // penser condition -
+char	*add_width(t_format format, va_list lst, char *type) // reflechir pour wchat_t // penser condition -
 {
 	int width;
 	int i;
@@ -108,8 +108,10 @@ int	ft_type(t_format format, va_list lst, char str)
 	{
 		type = ft_itoa(va_arg(lst, int));
 		//nbr = ft_strjoin("00", nbr); // pense a free use fonction rempli 0 et strlen
-		type = add_wp(format, lst, type);
+		//type = add_width(format, lst, type);
+		format.flags[0] != '-' ? (type = add_width(format, lst, type)) : 0;
 		ft_putstr(type);
+		format.flags[0] == '-' ? add_width(format, lst, type) : 0;
 		//ft_putnbr(va_arg(lst, int));
 	}
 	else if (str == 'D')
