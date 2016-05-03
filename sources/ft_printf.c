@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/04/24 23:41:36 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/03 20:14:54 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ void	ft_printf(const char *str, ...)
 				ft_format(lst, (char *)str, &i);
 			else
 				ft_putchar(str[i]);
+			i++;
 		}
 		else
+		{
 			ft_putchar(str[i]);
-		i++;
+			i++;		// avec ce i ici n affiche plus de plus
+		}
 	}
 	va_end(lst);
 }

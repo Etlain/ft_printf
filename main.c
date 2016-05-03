@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/04/27 22:42:49 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/03 20:18:19 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 #include "wchar.h"
 #include <stdio.h>
 #include <locale.h>
+#include <limits.h>
 
 int main()
 {
-	ft_printf("%-5d\n", 14);
-	printf("%09.8f\n", 1.547);
+	//printf("%llx\n", LONG_MAX);
+	ft_printf("Long max : %llx\n", LONG_MAX);
 }
 
 /*

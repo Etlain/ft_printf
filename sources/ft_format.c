@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/04/25 18:50:52 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/03 20:12:06 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ t_format	*format_init()
 	format->width = NULL;
 	format->precision = NULL;
 	format->modifier = NULL;
+	format->type = '\0';
 	return (format);
 }
 
@@ -112,6 +113,9 @@ void	ft_putformat(t_format *format) // a effacer
 	ft_putendl(format->precision);
 	ft_putstr("modifier : ");
 	ft_putendl(format->modifier);
+	ft_putstr("type : ");
+	ft_putchar(format->type);
+	ft_putchar('\n');
 }
 
 void	ft_format(va_list lst, char *str, int *i)
@@ -125,8 +129,9 @@ void	ft_format(va_list lst, char *str, int *i)
 		ft_wp(format, str, i);
 		ft_wp(format, str, i);
 		ft_modifier(format, str, i);
-		if (ft_type(lst, str[*i]) == 1)
+		if (ft_type(format, lst, str[*i]) == 1)
 			break ;
+		(*i)++;
 	}
-	ft_putformat(format);
+	//ft_putformat(format);
 }
