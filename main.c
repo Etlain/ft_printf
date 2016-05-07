@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/03 20:18:19 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/04 21:23:36 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,14 @@
 
 int main()
 {
-	//printf("%llx\n", LONG_MAX);
-	ft_printf("Long max : %llx\n", LONG_MAX);
+	int ft;
+	int pf;
+	/*printf("printf :    %hhd\n", (char)42);
+	ft_printf("ft_printf : %x\n", LONG_MAX, 4);*/
+	pf = printf("%5%\n");
+	ft = ft_printf("%5%\n");
+	/*printf("printf : %d\n", pf);
+	printf("ft_printf : %d\n", ft);*/
 }
 
 /*

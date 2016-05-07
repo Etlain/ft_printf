@@ -6,13 +6,12 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 23:05:39 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/03 19:52:09 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/04 21:23:47 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 
-#include <stdio.h>
 static long	long 	ft_less(long long nbr, int *i, int *h)
 {
 	long long s;
@@ -71,7 +70,5 @@ char		*ft_lltoah(long long nbr, int size)
 		str[max - i] = nbr_to_hex(h, size);
 		l = ft_less(nbr, &i, &h);
 	}
-	//str[i + 1] = '\0';
-	//printf("test : %s\n", str);
 	return (str);
 }
