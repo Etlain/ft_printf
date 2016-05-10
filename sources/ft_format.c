@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/04 21:23:52 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/10 21:35:34 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 #include <stdio.h>
 void	ft_flags(t_format *format, char str, int *i)
 {
-	int b;
+	//int b;
 
-	b = 1;
+	//b = 1;
 	if (str == '+')
-		format->flags = "+";
-	else if (str == ' ' && (format->flags == NULL || (b = ft_strcmp(format->flags, "+")) == 1))
-		format->flags = " ";
+		format->flags = '+';
+	else if (str == ' ' && (format->flags == '\0' || format->flags != '+'/*(b = ft_strcmp(format->flags, "+")) == 1*/))
+		format->flags = ' ';
 	else if (str == '-')
-		format->flags = "-";
-	else if (str == '0' && (format->flags == NULL || (b = ft_strcmp(format->flags, "-")) == 1)) //0 - important precision
-		format->flags = "0";
+		format->flags = '-';
+	else if (str == '0' && (format->flags == '\0' || format->flags != '-'/*(b = ft_strcmp(format->flags, "-")) == 1*/)) //0 - important precision
+		format->flags = '0';
 	else if (str == '#')
-		format->flags = "#";
-	else if (b == 0);
+		format->flags = '#';
+	/*else if (b == 0);*/
 	else
 		return ;
 	(*i)++;
@@ -94,7 +94,7 @@ t_format	*format_init()
 	t_format *format;
 
 	format = (t_format *)malloc(sizeof(t_format));
-	format->flags = NULL;
+	format->flags = '\0';
 	format->width = NULL;
 	format->precision = NULL;
 	format->modifier = NULL;
@@ -107,7 +107,8 @@ void	ft_putformat(t_format *format) // a effacer
 	ft_putchar('\n');
 	ft_putendl("format :");
 	ft_putstr("flags : ");
-	ft_putendl(format->flags);
+	ft_putchar(format->flags);
+	ft_putchar('\n');
 	ft_putstr("width : ");
 	ft_putendl(format->width);
 	ft_putstr("precision : ");
@@ -142,6 +143,6 @@ int		ft_format(va_list lst, char *str, int *i)
 			break ;
 		(*i)++;
 	}
-	return (length);
 	//ft_putformat(format);
+	return (length);
 }

@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/10 20:10:52 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/10 21:39:10 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*fill_zero(t_format format, char *type, int width)
 	char	*str2;
 	int		i;
 
-	if (format.flags == NULL || format.flags[0] != '0' || width <= 0)
+	if (format.flags == '\0' || format.flags != '0' || width <= 0)
 		return (NULL);
 	else if (is_dioux(format) == 0 || type == NULL)
 		return (NULL);
@@ -93,6 +93,32 @@ char	*add_width(t_format format, va_list lst, char *type, int *width) // reflech
 	return (type);
 }
 
+char	*add_prenbr(t_format format, char *nbr)
+{
+	char *pre;
+	char *str;
+
+	pre = NULL;
+	if (format.flags == '#' && ft_strcmp(nbr, "0") != 0)
+	{
+		format.type == 'x' ? (pre = "0x") : 0;
+		format.type == 'X' ? (pre = "0X") : 0;
+	}
+	if (format.flags == '#' && (format.type == 'o' || format.type == 'O'))
+		nbr[0] != '0' ? (pre = "0") : 0;
+	else if (format.flags == ' ' && nbr[0] != '-')
+		pre = " ";
+	else if (format.flags == '+' && nbr[0] != '-')
+		pre = "+";
+	if (pre != NULL)
+	{
+		str = nbr;
+		nbr = ft_strjoin(pre, str);
+		free(str);
+	}
+	return (nbr);
+}
+
 int		write_nbr(t_format format, va_list lst, long long nbr)
 {
 	char *word;
@@ -108,10 +134,11 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 		word = ft_lltoao(nbr);
 	else
 		word = ft_lltoa(nbr);
-	if (format.flags == NULL || format.flags[0] != '-')
+	if (format.flags == '\0' || format.flags != '-')
 		word = add_width(format, lst, word, &width);
+	word = add_prenbr(format, word);
 	ft_putstr(word);
-	if (format.flags != NULL && format.flags[0] == '-')
+	if (format.flags != '\0' && format.flags == '-')
 		add_width(format, lst, word, &width);
 	if (word == NULL)
 		return (0);
