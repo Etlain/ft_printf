@@ -6,7 +6,7 @@
 /*   By: mmouhssi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 15:42:01 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/02 22:30:36 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/10 19:57:31 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,16 @@ void			ft_init_str(char *str, unsigned int c, int n);
 void			ft_putstr_tab(char **tab);
 void			ft_putendl_tab(char **tab);
 void			ft_free_tab(char **tab);
-long long		ft_power(int nb, int power);
+long			ft_power(int nb, int power);
 int			ft_factorial(int nb);
 int			ft_sqrt(int nb);
 int			ft_ahtoi(char *str);
 char			*ft_itoab(unsigned int nbr);
 char			*ft_itoah(unsigned int nbr, int size);
 char			*ft_itoao(unsigned int nbr);
+char			*ft_lltoa(long long nbr);
+char			*ft_lltoah(unsigned long long nbr, int size);
+char			*ft_lltoao(unsigned long long nbr);
 int			ft_abs(int n);
 int			ft_sizebyte(long nbr);
 void			ft_swap(int *a, int *b);

@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/04 21:23:36 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/10 19:50:43 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,18 @@ int main()
 	int pf;
 	/*printf("printf :    %hhd\n", (char)42);
 	ft_printf("ft_printf : %x\n", LONG_MAX, 4);*/
-	pf = printf("%5%\n");
-	ft = ft_printf("%5%\n");
-	/*printf("printf : %d\n", pf);
-	printf("ft_printf : %d\n", ft);*/
+	//pf = printf("%5%\n");
+	//ft = ft_printf("%5%\n");
+	printf("printf :    %llo\n", 64);
+	ft_printf("ft_printf : %llo\n", 64);
+	//ft_printf("ft_printf : %llx\n", LLONG_MIN);
+	/*printf("printf :    %o\n", 64);
+	ft_printf("printf :    %o\n", 64);*/
+	//ft_printf("ft_printf : %llo\n", LLONG_MIN);
+	//printf("long :    %d\n", sizeof(long));
+	//printf("long :    %d\n", sizeof(long long));
+	//ft_printf("ft_printf : %lld\n", (long long)-24145454564);
+	//ft_printf("ft_printf : %lld\n", (long long)2414);
 }
 
 /*

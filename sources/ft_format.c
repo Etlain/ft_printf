@@ -6,12 +6,13 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/03 20:12:06 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/04 21:23:52 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
+#include <stdio.h>
 void	ft_flags(t_format *format, char str, int *i)
 {
 	int b;
@@ -118,10 +119,12 @@ void	ft_putformat(t_format *format) // a effacer
 	ft_putchar('\n');
 }
 
-void	ft_format(va_list lst, char *str, int *i)
+int		ft_format(va_list lst, char *str, int *i)
 {
 	t_format *format;
-	
+	int	length;
+
+	length = 0;
 	format = format_init();
 	while (str[*i] != '\0')
 	{
@@ -129,9 +132,16 @@ void	ft_format(va_list lst, char *str, int *i)
 		ft_wp(format, str, i);
 		ft_wp(format, str, i);
 		ft_modifier(format, str, i);
-		if (ft_type(format, lst, str[*i]) == 1)
+		/*if (str[*i]== '%')
+		{
+			ft_putchar(str[*i]);
+			//length++;
+			return (1);
+		}*/
+		if ((length = ft_type(format, lst, str[*i])) > 0)
 			break ;
 		(*i)++;
 	}
+	return (length);
 	//ft_putformat(format);
 }

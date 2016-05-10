@@ -6,13 +6,16 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/10 20:10:52 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/04 17:35:44 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 // appliquer modificateur de longueur puis largeur du champs puis precision puis attribut
 
+#include "../ft_lltoa.c"
+#include "../ft_lltoah.c"
+#include "../ft_lltoao.c"
 /*
 void	ft_spc()
 {
@@ -51,7 +54,7 @@ char	*fill_zero(t_format format, char *type, int width)
 
 	if (format.flags == NULL || format.flags[0] != '0' || width <= 0)
 		return (NULL);
-	else if (is_dioux(format) == 0 || type == NULL)
+	else if (is_dioux(format) == 0)
 		return (NULL);
 	i = 0;
 	str = type;
@@ -65,27 +68,27 @@ char	*fill_zero(t_format format, char *type, int width)
 	return (str);
 }
 
-char	*add_width(t_format format, va_list lst, char *type, int *width) // reflechir pour wchat_t // penser condition -
+char	*add_width(t_format format, va_list lst, char *type) // reflechir pour wchat_t // penser condition -
 {
-	//int width;
+	int width;
 	int i;
 	char *str;
 
-	//width = 0;
+	width = 0;
 	str = NULL;
 	if (format.width == NULL)
 		return (type);
 	else if (format.width[0] == '*')
-		*width = va_arg(lst, int) - ft_strlen(type);
+		width = va_arg(lst, int) - ft_strlen(type);
 	else if (format.width[0] >= '0' && format.width[0] <= '9')
-		*width = ft_atoi(format.width) - ft_strlen(type);
+		width = ft_atoi(format.width) - ft_strlen(type);
 	else
 		return (type);
-	str = fill_zero(format, type, *width);
+	str = fill_zero(format, type, width);
 	if (str != NULL)
 		return (str);
 	i = 0;
-	while (i < *width && *width > 0)
+	while (i < width && width > 0)
 	{
 		ft_putchar(' ');
 		i++;
@@ -93,13 +96,31 @@ char	*add_width(t_format format, va_list lst, char *type, int *width) // reflech
 	return (type);
 }
 
-int		write_nbr(t_format format, va_list lst, long long nbr)
+void	add_modifier(t_format format, long long *nbr)
+{
+	if (format.modifier == NULL || is_dioux(format) == 0)
+		return ;
+	if (ft_strcmp(format.modifier, "hh") == 0)
+		*nbr = (long long)(char)*nbr;
+	else if (format.modifier[0] == 'h')
+		*nbr = (long long)(short)*nbr;
+	else if (format.modifier[0] == 'l')
+		*nbr = (long long)(long)*nbr;
+	else if (ft_strcmp(format.modifier, "ll") == 0)
+		*nbr = (long long)*nbr;
+	else if (format.modifier[0] == 'j')
+		*nbr = (long long)(intmax_t)*nbr;
+	else if (format.modifier[0] == 'z')
+		*nbr = (long long)(size_t)*nbr;
+}
+
+
+void	write_nbr(t_format format, va_list lst, long long nbr)
 {
 	char *word;
-	int width;
 
 	word = NULL;
-	width = 0;
+	add_modifier(format, &nbr);
 	if (format.type == 'x')
 		word = ft_lltoah(nbr, 1);
 	else if (format.type == 'X')
@@ -109,76 +130,43 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	else
 		word = ft_lltoa(nbr);
 	if (format.flags == NULL || format.flags[0] != '-')
-		word = add_width(format, lst, word, &width);
+		word = add_width(format, lst, word);
 	ft_putstr(word);
 	if (format.flags != NULL && format.flags[0] == '-')
-		add_width(format, lst, word, &width);
-	if (word == NULL)
-		return (0);
-	width = width + ft_strlen(word);
-	return (width);
+		add_width(format, lst, word);
 }
 
-int		add_modifier(t_format format, va_list lst)
+int		ft_dioux(t_format *format, va_list lst, char str)
 {
-	int length;
-
-	length = 0;
-	if (format.modifier == NULL || is_dioux(format) == 0)
-		return (0);
-	if (ft_strcmp(format.modifier, "hh") == 0)
-		length = write_nbr(format, lst, (long long)va_arg(lst, int));
-	else if (format.modifier[0] == 'h')
-		length = write_nbr(format, lst, (long long)(short)va_arg(lst, int));
-	else if (format.modifier[0] == 'l')
-		length = write_nbr(format, lst, (long long)va_arg(lst, long));
-	else if (ft_strcmp(format.modifier, "ll") == 0)
-		length = write_nbr(format, lst, va_arg(lst, long long));
-	else if (format.modifier[0] == 'j')
-		length = write_nbr(format, lst, (long long)va_arg(lst, intmax_t));
-	else if (format.modifier[0] == 'z')
-		length = write_nbr(format, lst, (long long)va_arg(lst, size_t));
-	return (length);
-}
-
-int		ft_dioux(t_format format, va_list lst, char str)
-{
-	int length;
-
-	length = 0;
+	format->type = str;
 	if (str == 'd' || str == 'i')
-		length = write_nbr(format, lst, (long long)va_arg(lst, int));
+		write_nbr(*format, lst, (long long)va_arg(lst, int));
 	else if (str == 'D')
-		length = write_nbr(format, lst, (long long)va_arg(lst, long int));
+		write_nbr(*format, lst, (long long)va_arg(lst, long int));
 	else if (str == 'o')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
+		write_nbr(*format, lst, (long long)va_arg(lst, unsigned int));
 	else if (str == 'O')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
+		write_nbr(*format, lst, (long long)va_arg(lst, unsigned long));
 	else if (str == 'u')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
+		write_nbr(*format, lst, (long long)va_arg(lst, unsigned int));
 	else if (str == 'U')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
+		write_nbr(*format, lst, (long long)va_arg(lst, unsigned long));
 	else if (str == 'x')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
+		write_nbr(*format, lst, (long long)va_arg(lst, long long)); // test long long pour debug
 	else if (str == 'X')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
+		write_nbr(*format, lst, (long long)va_arg(lst, unsigned int));
 	else
-		return (-1);
+		return (0);
 	//ft_putendl("here");
-	return (length);
+	return (1);
 }
 
-int		ft_type(t_format *format, va_list lst, char str)
+int	ft_type(t_format *format, va_list lst, char str)
 {
-	int length;
+	char *word;
 
 	//printf("c : %c\n", str);
-	length = 0;
-	format->type = str;
-	if (format->modifier != NULL)
-		length = add_modifier(*format, lst);
-	else
-		length = ft_dioux(*format, lst, str);
+	ft_dioux(format, lst, str);
 	/*if (ft_dioux(format, lst, str) == 0)// && seconde fonction type)
 	{
 		ft_putchar(str);
@@ -216,21 +204,10 @@ int		ft_type(t_format *format, va_list lst, char str)
 		ft_putwchar(va_arg(lst, wchar_t));
 	else if (str == 'b')				// bonus pas integrer
 		ft_putstr(ft_itoab(va_arg(lst, unsigned int)));
-	if (str == '%')
-	{
-		// repetion de ce bout de code dans write nbr
-		length = 0;
-		/*if (format->flags == NULL || format->flags[0] != '-')
-			add_width(*format, lst, NULL, &length);*/
-		ft_putchar(str);
-		/*if (format->flags != NULL && format->flags[0] == '-')
-			add_width(*format, lst, NULL, &length);*/
-		return (1 + length);
-	}
 	/*else
 	{
 		ft_putchar(str); //affiche le type ?
 		return (0);
 	}*/
-	return (length);
+	return (1);
 }
