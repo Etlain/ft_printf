@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/10 21:39:10 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/12 23:04:15 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,9 @@ char	*fill_zero(t_format format, char *type, int width)
 {
 	char	*str;
 	char	*str2;
-	int		i;
+	int	i;
 
-	if (format.flags == '\0' || format.flags != '0' || width <= 0)
-		return (NULL);
-	else if (is_dioux(format) == 0 || type == NULL)
+	if (is_dioux(format) == 0 || type == NULL || width <= 0)
 		return (NULL);
 	i = 0;
 	str = type;
@@ -67,11 +65,9 @@ char	*fill_zero(t_format format, char *type, int width)
 
 char	*add_width(t_format format, va_list lst, char *type, int *width) // reflechir pour wchat_t // penser condition -
 {
-	//int width;
 	int i;
 	char *str;
 
-	//width = 0;
 	str = NULL;
 	if (format.width == NULL)
 		return (type);
@@ -81,7 +77,8 @@ char	*add_width(t_format format, va_list lst, char *type, int *width) // reflech
 		*width = ft_atoi(format.width) - ft_strlen(type);
 	else
 		return (type);
-	str = fill_zero(format, type, *width);
+	if (format.flags != '\0')
+		format.flags == '0' ? str = fill_zero(format, type, *width) : 0;
 	if (str != NULL)
 		return (str);
 	i = 0;
@@ -90,6 +87,26 @@ char	*add_width(t_format format, va_list lst, char *type, int *width) // reflech
 		ft_putchar(' ');
 		i++;
 	}
+	return (type);
+}
+
+char	*add_precision(t_format format, va_list lst, char *type, int *prcsn) // reflechir pour wchat_t // penser condition -
+{
+	int i;
+	char *str;
+
+	str = NULL;
+	if (format.precision == NULL)
+		return (type);
+	else if (format.precision[0] == '*')
+		*prcsn = va_arg(lst, int) - ft_strlen(type);
+	else if (format.precision[0] >= '0' && format.precision[0] <= '9')
+		*prcsn = ft_atoi(format.precision) - ft_strlen(type);
+	else
+		return (type);
+	str = fill_zero(format, type, *prcsn);
+	if (str != NULL)
+		return (str);
 	return (type);
 }
 
@@ -134,6 +151,8 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 		word = ft_lltoao(nbr);
 	else
 		word = ft_lltoa(nbr);
+	word = add_precision(format, lst, word, &width);
+	width = 0;
 	if (format.flags == '\0' || format.flags != '-')
 		word = add_width(format, lst, word, &width);
 	word = add_prenbr(format, word);
@@ -241,7 +260,7 @@ int		ft_type(t_format *format, va_list lst, char str)
 		ft_putchar((char)va_arg(lst, int));
 	else if (str == 'C')
 		ft_putwchar(va_arg(lst, wchar_t));
-	else if (str == 'b')				// bonus pas integrer
+	else if (str == 'b')				// bonus pas integrer float et double fonction
 		ft_putstr(ft_itoab(va_arg(lst, unsigned int)));
 	if (str == '%')
 	{
