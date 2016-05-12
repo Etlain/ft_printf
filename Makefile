@@ -6,7 +6,7 @@
 #    By: mmouhssi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 09:06:02 by mmouhssi          #+#    #+#              #
-#*   Updated: 2016/04/25 00:43:38 by mmouhssi         ###   ########.fr       *#
+#*   Updated: 2016/05/12 23:17:43 by mmouhssi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ LIB =   ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c          \
 
 PATH_LIB = libft/
 
-SRC = ft_printf.c ft_format.c ft_type.c
+SRC = ft_printf.c ft_format.c ft_type.c write_nbr.c
 
 PATH_SRC = sources/
 

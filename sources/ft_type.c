@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/12 23:04:15 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/12 23:12:48 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,22 +240,6 @@ int		ft_type(t_format *format, va_list lst, char str)
 		ft_putstr("0x"); //ptet ajouter un 10
 		ft_putstr(ft_itoah(va_arg(lst, int), 1));
 	}
-	/*else if (str == 'd' || str == 'i')
-		ft_dioux(format, &nbr, lst, str);
-	else if (str == 'D')
-		ft_putnbr(va_arg(lst, long int));*/
-	/*else if (str == 'o')
-		ft_putstr(ft_itoao(va_arg(lst, unsigned int)));
-	else if (str == 'O')
-		ft_putstr(ft_itoao(va_arg(lst, unsigned long)));*/
-	/*else if (str == 'u')
-		ft_putnbr(va_arg(lst, unsigned int));
-	else if (str == 'U')
-		ft_putnbr(va_arg(lst, unsigned long));*/
-	/*else if (str == 'x')
-		ft_putstr(ft_itoah(va_arg(lst, int), 1));
-	else if (str == 'X')
-		ft_putstr(ft_itoah(va_arg(lst, unsigned int), 2));*/
 	else if (str == 'c')
 		ft_putchar((char)va_arg(lst, int));
 	else if (str == 'C')
