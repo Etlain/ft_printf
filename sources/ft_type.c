@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/13 20:40:09 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/13 22:04:09 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,39 @@ int		ft_dioux(t_format format, va_list lst, char str) // ajout p
 }
 
 
-void	ft_spc(t_format format, va_list lst, char str)
+void	ft_sc(t_format format, va_list lst, char str)
 {
 	wchar_t *word;
+	int width;
 
-	if (str == 'S' || (str == 's' && format.modifier[0] == 'l'))
+	width = 0;
+	word = NULL;
+	if (str == 'S'/* || (str == 's' && format.modifier[0] == 'l')*/)//verif modifier nn null
 		word = va_arg(lst, wchar_t *);
 	//	ft_putwstr(va_arg(lst, wchar_t *));
 	else if (str == 's')
 		word = (wchar_t *)va_arg(lst, char *);
 		//ft_putstr(va_arg(lst, char *));
-	else if (str == 'c')
+	if (str == 'c' || str == 'C')
+	{
+		format.flags != '-' ? add_width(format, lst, "1", &width) : 0;
+		str == 'c' ? ft_putchar((char)va_arg(lst, int)) : 0;
+		str == 'C' ? ft_putwchar(va_arg(lst, wchar_t)) : 0;
+		format.flags == '-' ? add_width(format, lst, "1", &width) : 0;
+	}
+	if (word != NULL)
+	{
+		format.flags != '-' ? add_width(format, lst, (char *)word, &width) : 0;
+		if (str == 's')
+			ft_putstr((char *)word);
+		else
+			ft_putwstr(word);
+		format.flags == '-' ? add_width(format, lst, (char *)word, &width) : 0;
+	}
+	/*if (str == 'c')
 		ft_putchar((char)va_arg(lst, int));
 	else if (str == 'C')
-		ft_putwchar(va_arg(lst, wchar_t));
+		ft_putwchar(va_arg(lst, wchar_t));*/
 }
 
 
@@ -108,26 +127,27 @@ int		ft_type(t_format *format, va_list lst, char str)
 		length = add_modifier(*format, lst);
 	else
 		length = ft_dioux(*format, lst, str);
+	ft_sc(*format, lst, str);
 	/*if (ft_dioux(format, lst, str) == 0)// && seconde fonction type)
 	{
 		ft_putchar(str);
 		return (0);
 	}*/
 	//ft_putendl("here");
-	if (str == 's')
+	/*if (str == 's')
 		ft_putstr(va_arg(lst, char *));
 	else if (str == 'S')
-		ft_putwstr(va_arg(lst, wchar_t *));
+		ft_putwstr(va_arg(lst, wchar_t *));*/
 	/*else if (str == 'p')
 	{
 		ft_putstr("0x"); //ptet ajouter un 10
 		ft_putstr(ft_itoah(va_arg(lst, int), 1));
 	}*/
-	else if (str == 'c')
+	/*else if (str == 'c')
 		ft_putchar((char)va_arg(lst, int));
 	else if (str == 'C')
-		ft_putwchar(va_arg(lst, wchar_t));
-	else if (str == 'b')				// bonus pas integrer float et double fonction
+		ft_putwchar(va_arg(lst, wchar_t));*/
+	if (str == 'b')				// bonus pas integrer float et double fonction
 		ft_putstr(ft_itoab(va_arg(lst, unsigned int)));
 	if (str == '%')
 	{

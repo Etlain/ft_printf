@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/13 20:36:44 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/13 22:04:53 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*fill_zero(t_format format, char *type, int width)
 	return (str);
 }
 
-static char	*add_width(t_format format, va_list lst, char *type, int *width) // reflechir pour wchat_t // penser condition -
+char	*add_width(t_format format, va_list lst, char *type, int *width) // reflechir pour wchat_t // penser condition -
 {
 	int i;
 	char *str;
@@ -138,12 +138,12 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	format.type == 'p' ? (word = ft_strjoinfree("10", word)) : 0; // 0x ou 0x10 ?
 	word = add_precision(format, lst, word, &width);
 	width = 0;
-	if (format.flags == '\0' || format.flags != '-')
+	if (/*format.flags == '\0' ||*/format.flags != '-')
 		word = add_width(format, lst, word, &width);
 	word = add_prenbr(format, word);
 	format.type == 'p' ? (word = ft_strjoinfree("0x", word)) : 0; // 0x ou 0x10 ?
 	ft_putstr(word);
-	if (format.flags != '\0' && format.flags == '-')
+	if (/*format.flags != '\0' && */format.flags == '-')
 		add_width(format, lst, word, &width);
 	/*if (word == NULL)
 		return (0);*/
