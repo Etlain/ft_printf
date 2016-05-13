@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/13 17:33:03 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/13 20:39:15 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int main()
 	char *truc = "hello";
 
 	setlocale(LC_ALL, "");
-	printf("printf : %c\n", 'a');
-	ft_printf("ft_printf : %S", truc2);
+	printf("printf :      %-30.15p\n", (void *)truc);
+	printf("printf : %x\n", (void *)truc);
+	ft_printf("ft_printf : %x\n", (void *)truc);
+	ft_printf("ft_printf : %p\n", (void *)truc);
 	/*printf("printf :    %hhd\n", (char)42);
 	ft_printf("ft_printf : %x\n", LONG_MAX, 4);*/
 	//pf = printf("%5%\n");

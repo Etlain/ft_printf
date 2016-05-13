@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/13 16:42:23 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/13 20:36:44 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ static char	*fill_zero(t_format format, char *type, int width)
 	char	*str2;
 	int	i;
 
-	if (is_dioux(format) == 0 || type == NULL || width <= 0)
+	if (type == NULL || width <= 0)
+		return (NULL);
+	if (is_dioux(format) == 0 && format.type != 'p')
 		return (NULL);
 	i = 0;
 	str = type;
@@ -108,6 +110,16 @@ static char	*add_prenbr(t_format format, char *nbr)
 	return (nbr);
 }
 
+char	*ft_strjoinfree(char *s1, char *s2)
+{
+	char *str;
+
+	str = s2;
+	str = ft_strjoin(s1, s2);
+	free(s2);
+	return (str);
+}
+
 int		write_nbr(t_format format, va_list lst, long long nbr)
 {
 	char *word;
@@ -115,7 +127,7 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 
 	word = NULL;
 	width = 0;
-	if (format.type == 'x')
+	if (format.type == 'x' || format.type == 'p')
 		word = ft_lltoah(nbr, 1);
 	else if (format.type == 'X')
 		word = ft_lltoah(nbr, 2);
@@ -123,16 +135,19 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 		word = ft_lltoao(nbr);
 	else
 		word = ft_lltoa(nbr);
+	format.type == 'p' ? (word = ft_strjoinfree("10", word)) : 0; // 0x ou 0x10 ?
 	word = add_precision(format, lst, word, &width);
 	width = 0;
 	if (format.flags == '\0' || format.flags != '-')
 		word = add_width(format, lst, word, &width);
 	word = add_prenbr(format, word);
+	format.type == 'p' ? (word = ft_strjoinfree("0x", word)) : 0; // 0x ou 0x10 ?
 	ft_putstr(word);
 	if (format.flags != '\0' && format.flags == '-')
 		add_width(format, lst, word, &width);
-	if (word == NULL)
-		return (0);
+	/*if (word == NULL)
+		return (0);*/
 	width = width + ft_strlen(word);
+	word == NULL ? width = 0 : 0;
 	return (width);
 }

@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/13 17:40:39 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/13 20:40:09 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		add_modifier(t_format format, va_list lst)
 	return (length);
 }
 
-int		ft_dioux(t_format format, va_list lst, char str)
+int		ft_dioux(t_format format, va_list lst, char str) // ajout p
 {
 	int length;
 
@@ -67,6 +67,12 @@ int		ft_dioux(t_format format, va_list lst, char str)
 		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
 	else if (str == 'X')
 		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
+	else if (str == 'p')
+	{
+		//ft_putstr("0x");
+		length = write_nbr(format, lst, (long long)va_arg(lst, int));
+		//length = length + 2;
+	}
 	else
 		return (-1);
 	//ft_putendl("here");
@@ -76,15 +82,14 @@ int		ft_dioux(t_format format, va_list lst, char str)
 
 void	ft_spc(t_format format, va_list lst, char str)
 {
+	wchar_t *word;
+
 	if (str == 'S' || (str == 's' && format.modifier[0] == 'l'))
-		ft_putwstr(va_arg(lst, wchar_t *));
+		word = va_arg(lst, wchar_t *);
+	//	ft_putwstr(va_arg(lst, wchar_t *));
 	else if (str == 's')
-		ft_putstr(va_arg(lst, char *));
-	else if (str == 'p')
-	{
-		ft_putstr("0x"); //ptet ajouter un 10
-		ft_putstr(ft_itoah(va_arg(lst, int), 1));
-	}
+		word = (wchar_t *)va_arg(lst, char *);
+		//ft_putstr(va_arg(lst, char *));
 	else if (str == 'c')
 		ft_putchar((char)va_arg(lst, int));
 	else if (str == 'C')
@@ -113,11 +118,11 @@ int		ft_type(t_format *format, va_list lst, char str)
 		ft_putstr(va_arg(lst, char *));
 	else if (str == 'S')
 		ft_putwstr(va_arg(lst, wchar_t *));
-	else if (str == 'p')
+	/*else if (str == 'p')
 	{
 		ft_putstr("0x"); //ptet ajouter un 10
 		ft_putstr(ft_itoah(va_arg(lst, int), 1));
-	}
+	}*/
 	else if (str == 'c')
 		ft_putchar((char)va_arg(lst, int));
 	else if (str == 'C')
