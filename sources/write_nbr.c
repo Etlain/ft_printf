@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/12 23:15:33 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/13 16:42:23 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,11 @@ static char	*add_prenbr(t_format format, char *nbr)
 		nbr[0] != '0' ? (pre = "0") : 0;
 	else if (format.flags == ' ' && nbr[0] != '-')
 		pre = " ";
-	else if (format.flags == '+' && nbr[0] != '-')
-		pre = "+";
+	else if (format.type == 'd' || format.type == 'D' || format.type == 'i')
+	{
+		if (format.flags == '+' && nbr[0] != '-')
+			pre = "+";
+	}
 	if (pre != NULL)
 	{
 		str = nbr;

@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/10 20:15:04 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/13 17:40:31 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ int		ft_printf(const char *str, ...)
 	int length;
 	int format;
 
+	//ft_putstr("hello");
+	//ft_putchar(str[1]);
+	//write(1, &str[4], 1);
 	va_start(lst, str);
 	i = 0;
 	format = 0;
@@ -40,8 +43,8 @@ int		ft_printf(const char *str, ...)
 		{
 			ft_putchar(str[i]);
 			length++;
-			/*printf("lgt : %d\n", format);
-			printf("lgt : %d\n", length);*/
+			//printf("lgt : %d\n", format);
+			//printf("lgt : %d\n", length);
 			i++;		// avec ce i ici n affiche plus de plus
 		}
 	}

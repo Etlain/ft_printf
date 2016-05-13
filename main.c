@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/10 19:50:43 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/13 17:33:03 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,18 @@ int main()
 {
 	int ft;
 	int pf;
+	wchar_t *truc2 = L"héllo∂";
+	char *truc = "hello";
+
+	setlocale(LC_ALL, "");
+	printf("printf : %c\n", 'a');
+	ft_printf("ft_printf : %S", truc2);
 	/*printf("printf :    %hhd\n", (char)42);
 	ft_printf("ft_printf : %x\n", LONG_MAX, 4);*/
 	//pf = printf("%5%\n");
 	//ft = ft_printf("%5%\n");
-	printf("printf :    %llo\n", 64);
-	ft_printf("ft_printf : %llo\n", 64);
+	//printf("printf :    %+D\n", 64);
+	//ft_printf("ft_printf : %+o\n", 64);
 	//ft_printf("ft_printf : %llx\n", LLONG_MIN);
 	/*printf("printf :    %o\n", 64);
 	ft_printf("printf :    %o\n", 64);*/
