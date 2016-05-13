@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/13 17:40:31 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/13 18:46:23 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int		ft_printf(const char *str, ...)
 	int length;
 	int format;
 
-	//ft_putstr("hello");
-	//ft_putchar(str[1]);
+	ft_putchar(str[16]);
 	//write(1, &str[4], 1);
 	va_start(lst, str);
 	i = 0;
@@ -37,10 +36,12 @@ int		ft_printf(const char *str, ...)
 			length = length + format;
 			//else
 			//	ft_putchar(str[i]);
-			i++;
+			//i++;
 		}
 		else
 		{
+			/*if (s[i] == '*')
+				ft_putchar('D');*/
 			ft_putchar(str[i]);
 			length++;
 			//printf("lgt : %d\n", format);
