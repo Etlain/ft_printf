@@ -6,13 +6,13 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/13 22:04:23 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/14 18:30:41 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-//#include <stdio.h>
+#include <stdio.h>
 int		ft_printf(const char *str, ...)
 {
 	va_list lst;
@@ -47,7 +47,6 @@ int		ft_printf(const char *str, ...)
 			i++;		// avec ce i ici n affiche plus de plus
 		}
 	}
-	//printf("i : %c\n", i - 2);
 	va_end(lst);
 	return (length);
 }

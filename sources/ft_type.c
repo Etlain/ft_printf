@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/14 18:18:50 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/14 18:43:00 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int		ft_type(t_format *format, va_list lst, char str)
 		length = add_modifier(*format, lst);
 	else
 		length = ft_dioux(*format, lst, str);
-	length = ft_sc(*format, lst, str);
+	length <= 0 ? (length = ft_sc(*format, lst, str)) : 0;
 	/*if (ft_dioux(format, lst, str) == 0)// && seconde fonction type)
 	{
 		ft_putchar(str);
@@ -150,10 +150,10 @@ int		ft_type(t_format *format, va_list lst, char str)
 		// repetion de ce bout de code dans write nbr
 		length = 0;
 		if (format->flags != '-')
-			add_width(*format, lst, NULL, &length);
+			add_width(*format, lst, "%", &length);
 		ft_putchar(str);
 		if (format->flags == '-')
-			add_width(*format, lst, NULL, &length);
+			add_width(*format, lst, "%", &length);
 		return (1 + length);
 	}
 	/*else
