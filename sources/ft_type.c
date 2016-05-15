@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/14 18:43:00 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/14 19:21:58 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int		ft_dioux(t_format format, va_list lst, char str) // ajout p
 		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
 	else if (str == 'x')
 		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
+		//ft_putendl("hehe");
+		//ft_putnbr(length);
 	else if (str == 'X')
 		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
 	else if (str == 'p')

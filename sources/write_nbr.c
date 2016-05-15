@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/14 18:26:13 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/14 21:38:52 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ static char	*fill_zero(t_format format, char *type, int width)
 	return (str);
 }
 
+void	val_width(t_format format , int *width)
+{
+	format.flags == '0' ? *width = 0 : 0;
+	*width < 0 ? *width = 0 : 0;
+	if (format.flags == '#' && (format.type == 'x' || format.type == 'X'))
+		*width = *width - 2;
+	if (format.flags == '#' && (format.type == 'o' || format.type == 'O'))
+		*width = *width - 1;
+}
+
 char	*add_width(t_format format, va_list lst, char *type, int *width) // reflechir pour wchat_t // penser condition -
 {
 	int i;
@@ -48,8 +58,13 @@ char	*add_width(t_format format, va_list lst, char *type, int *width) // reflech
 		*width = ft_atoi(format.width) - ft_strlen(type);
 	else
 		return (type);
-	if (format.flags != '\0')
-		format.flags == '0' ? str = fill_zero(format, type, *width) : 0;
+	/*if (format.flags != '\0')
+	{*/
+	format.flags == '0' ? str = fill_zero(format, type, *width) : 0;
+	val_width(format, width);
+	/*format.flags == '0' ? *width = 0 : 0;
+	*width < 0 ? *width = 0 : 0;*/
+	//}
 	if (str != NULL)
 		return (str);
 	i = 0;
@@ -148,6 +163,8 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	/*if (word == NULL)
 		return (0);*/
 	width = width + ft_strlen(word);
+	//ft_putendl("haha nelson");
+	//ft_putnbr(width);
 	word == NULL ? width = 0 : 0;
 	return (width);
 }

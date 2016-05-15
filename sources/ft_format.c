@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/13 20:30:19 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/15 11:32:40 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,6 @@ int		ft_format(va_list lst, const char *s, int *i)
 		}
 		(*i)++;
 	}
-	//ft_putformat(format);
+	ft_putformat(format);
 	return (length);
 }
