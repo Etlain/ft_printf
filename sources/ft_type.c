@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/14 19:21:58 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/15 17:43:02 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ int	ft_sc(t_format format, va_list lst, char str)
 		format.flags != '-' ? add_width(format, lst, (char *)word, &width) : 0;
 		if (format.precision != NULL)
 		{
-			if (str == 's')
+			if (str == 's' && format.precision[0] != '.')
 				ft_putnstr((char *)word, ft_atoi(format.precision));
-			else if (str == 'S')
+			else if (str == 'S' && format.precision[0] != '.')
 				ft_putnwstr(word, ft_atoi(format.precision));
 		}
 		else if (str == 's')
@@ -119,7 +119,9 @@ int	ft_sc(t_format format, va_list lst, char str)
 			ft_putwstr(word);
 		format.flags == '-' ? add_width(format, lst, (char *)word, &width) : 0;
 	}
-	if (word != NULL && str == 's')
+	if (format.precision != NULL && format.precision[0] != '.' && (str == 's' || str == 'S'))
+		width = ft_atoi(format.precision) + width;
+	else if (word != NULL && str == 's')
 		width = ft_strlen((char *)word) + width;
 	else if (word != NULL && str == 'S')
 		width = ft_wstrlen(word) + width;
@@ -134,11 +136,16 @@ int		ft_type(t_format *format, va_list lst, char str)
 	//printf("c : %c\n", str);
 	length = 0;
 	format->type = str;
-	if (format->modifier != NULL)
-		length = add_modifier(*format, lst);
+	if (is_dioux(*format) == 1 || str == 'p')
+	{
+		if (format->modifier != NULL)
+			length = add_modifier(*format, lst);
+		else
+			length = ft_dioux(*format, lst, str);
+	}
 	else
-		length = ft_dioux(*format, lst, str);
-	length <= 0 ? (length = ft_sc(*format, lst, str)) : 0;
+		length = ft_sc(*format, lst, str);
+	//length <= 0 ? (length = ft_sc(*format, lst, str)) : 0;
 	/*if (ft_dioux(format, lst, str) == 0)// && seconde fonction type)
 	{
 		ft_putchar(str);

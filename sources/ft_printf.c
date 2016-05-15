@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/14 18:30:41 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/15 16:34:25 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		ft_printf(const char *str, ...)
 			i++;
 			//if (str[i] != '%')
 			format = ft_format(lst, (char *)str, &i);
+			format < 0 ? (format = 0) : 0;
 			length = length + format;
 			//else
 			//	ft_putchar(str[i]);

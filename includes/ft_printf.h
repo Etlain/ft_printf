@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/23 02:24:25 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/13 21:19:39 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/15 11:51:14 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 typedef struct	s_format
 {
 	char	flags;
+	char	pre;
+	char	sign;
 	char 	*width;
 	char 	*precision;
 	char	*modifier;
