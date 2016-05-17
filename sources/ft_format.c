@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/15 16:27:46 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/17 19:06:09 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,38 @@ void	ft_flags(t_format *format, char *str, int *i)
 	while (str[j] != '\0' && is_flags(str[j]) == 1)
 	{
 		if (str[j] == '+')
+		{
 			format->sign = '+';
+			(*i)++;
+		}
 		else if (str[j] == ' ' && (format->sign == '\0' || format->sign != '+'/*(b = ft_strcmp(format->flags, "+")) == 1*/))
+		{
 			format->sign = ' ';
+			(*i)++;
+		}
 		else if (str[j] == '-')
+		{
 			format->flags = '-';
+			(*i)++;
+		}
 		else if (str[j] == '0' && (format->flags == '\0' || format->flags != '-'/*(b = ft_strcmp(format->flags, "-")) == 1*/)) //0 - important precision
+		{
 			format->flags = '0';
+			(*i)++;
+		}
 		else if (str[j] == '#')
+		{
 			format->pre = '#';
+			(*i)++;
+		}
 	/*else if (b == 0);*/
 		else
 			return ;
 		j++;
 	}
-	format->sign != '\0' ? (*i)++ : 0;
+	/*format->sign != '\0' ? (*i)++ : 0;
 	format->pre != '\0' ? (*i)++ : 0;
-	format->flags != '\0' ? (*i)++ : 0;
+	format->flags != '\0' ? (*i)++ : 0;*/
 }
 
 void	ft_wp(t_format *format, char *str, int *i) //ajout condition '.' pour precis
@@ -156,7 +171,8 @@ int		ft_format(va_list lst, const char *s, int *i)
 	format = format_init();
 	while (str[*i] != '\0')
 	{
-		//ft_putchar(str[*i]);
+		/*ft_putnbr(*i);
+		ft_putchar(' ');*/
 		ft_flags(format, str, i);
 		ft_wp(format, str, i);
 		ft_wp(format, str, i);
