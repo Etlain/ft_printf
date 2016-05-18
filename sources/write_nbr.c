@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/17 18:35:28 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/18 21:08:43 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,52 @@ static char	*fill_zero(t_format format, char *type, int width)
 	char	*str;
 	char	*str2;
 	int	i;
+	int 	j;
 
 	if (type == NULL || width <= 0)
 		return (NULL);
 	if (is_dioux(format) == 0 && format.type != 'p')
 		return (NULL);
 	i = 0;
-	str = type;
-	//format.pre == '#' ? (width = width - 2) : 0;
+	j = 0;
+	/*ft_putnbr(width);
+	ft_putchar('\n');*/
+	//str = type;
+	//str = (char *)malloc(ft_strlen(type) + width);
+	str = (char *)ft_memalloc(ft_strlen(type) + width);
+	//ft_putstr(str);
+	if (type[j] == '-' || type[j] == '+' || type[j] == ' ')
+	{
+		str[i] = type[j];
+		i++;
+		width++;
+		j++;
+	}
+	else if (type[j] == '0' && (type[j + 1] == 'x' || type[j + 1] == 'X'))
+	{
+		type[j + 1] == 'x' ? ft_strcat(str, "0x") : 0;
+		type[j + 1] == 'X' ? ft_strcat(str, "0X") : 0;
+		j = 2;
+		i = 2;
+		width = width + 2;
+	}
 	while (i < width)
 	{
-		str2 = str;
-		str = ft_strjoin("0", str2);
-		free(str2);
+		//str2 = str;
+		//str = ft_strjoin("0", str2);
+		//free(str2);
+		ft_strcat(str, "0");
 		i++;
 	}
+	ft_strcat(str, &type[j]);
 	return (str);
 }
 
 void	val_width(t_format format , int *width)
 {
-	format.flags == '0' ? *width = 0 : 0;
+	//format.flags == '0' ? *width = 0 : 0;
+	if (format.flags == '0' && format.precision == NULL)
+		*width = 0;
 	*width < 0 ? *width = 0 : 0;
 	/*if (format.pre == '#' && (format.type == 'x' || format.type == 'X'))
 		*width = *width - 2;
@@ -83,11 +108,14 @@ char	*add_width(t_format format, va_list lst, char *type, int *width) // reflech
 	{*/
 	if (no_print(format, type) == 1)
 		(*width)++;
-	if (format.pre == '#' && (format.type == 'x' || format.type == 'X') && format.flags != '-')
-		*width = *width - 2;
-	else if (format.pre == '#' && (format.type == 'o' || format.type == 'O') && format.flags != '-')
-		*width = *width - 1;
-	format.flags == '0' ? str = fill_zero(format, type, *width) : 0;
+	/*if (format.pre == '#' && (format.type == 'x' || format.type == 'X') && format.flags != '-')
+		*width = *width - 2;*/
+	/*if (format.pre == '#' && (format.type == 'o' || format.type == 'O') && format.flags != '-')
+		*width = *width - 1;*/
+	if (format.precision == NULL)
+		format.flags == '0' ? str = fill_zero(format, type, *width) : 0;
+	/*ft_putnbr(*width);
+	ft_putchar('\n');*/
 	val_width(format, width);
 	/*format.flags == '0' ? *width = 0 : 0;
 	*width < 0 ? *width = 0 : 0;*/
@@ -115,14 +143,16 @@ static char	*add_precision(t_format format, va_list lst, char *type, int *prcsn)
 	str = NULL;
 	if (format.precision == NULL)
 		return (type);
-	/*else if ((format.precision[0] == '0' || format.precision[0] == '.') && ft_strcmp(type, "0") == 0)
-		return ("\0\0");*/
 	else if (format.precision[0] == '*')
 		*prcsn = va_arg(lst, int) - ft_strlen(type);
 	else if (format.precision[0] >= '0' && format.precision[0] <= '9')
 		*prcsn = ft_atoi(format.precision) - ft_strlen(type);
 	else
 		return (type);
+	if (type != NULL && (type[0] == '-' || type[0] == '+'))
+		(*prcsn)++;
+	/*ft_putnbr(*prcsn);
+	ft_putendl("here");*/
 	str = fill_zero(format, type, *prcsn);
 	if (str != NULL)
 		return (str);
@@ -142,7 +172,7 @@ static char	*add_prenbr(t_format format, char *nbr)
 	}
 	if (format.pre == '#' && (format.type == 'o' || format.type == 'O'))
 		nbr[0] != '0' ? (pre = "0") : 0;
-	if (format.sign == ' ' && nbr[0] != '-')
+	if (format.sign == ' ' && nbr[0] != '-' && format.type != 'u')
 		pre = " ";
 	else if (format.type == 'd' || format.type == 'D' || format.type == 'i')
 	{
@@ -188,9 +218,10 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	format.type == 'p' ? (word = ft_strjoinfree("10", word)) : 0; // 0x ou 0x10 ?
 	word = add_precision(format, lst, word, &width);
 	width = 0;
+	word = add_prenbr(format, word);
 	if (format.flags != '-')
 		word = add_width(format, lst, word, &width);
-	word = add_prenbr(format, word);
+	//word = add_prenbr(format, word);
 	format.type == 'p' ? (word = ft_strjoinfree("0x", word)) : 0; // 0x ou 0x10 ?
 	b == 0 ? ft_putstr(word) : 0;
 	if (format.flags == '-')
