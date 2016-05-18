@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/13 20:39:15 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/19 00:35:23 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,14 @@ int main()
 	char *truc = "hello";
 
 	setlocale(LC_ALL, "");
-	printf("printf :      %-30.15p\n", (void *)truc);
-	printf("printf : %x\n", (void *)truc);
-	ft_printf("ft_printf : %x\n", (void *)truc);
-	ft_printf("ft_printf : %p\n", (void *)truc);
+	/*pf = printf("% ");
+	printf("\n");
+	ft = ft_printf("% ");
+	printf("\n");*/
+	pf = printf("printf    : %s%p%d%p%s%p%p%s\n", "a", &pf, 1, 2, truc, "b", &pf, truc);
+	ft = ft_printf("ft_printf : %s%p%d%p%s%p%p%s\n", "a", &pf, 1, 2, truc, "b", &pf, truc);
+	printf("printf : %d\n", pf);
+	printf("ft_printf : %d\n", ft);
 	/*printf("printf :    %hhd\n", (char)42);
 	ft_printf("ft_printf : %x\n", LONG_MAX, 4);*/
 	//pf = printf("%5%\n");

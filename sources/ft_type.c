@@ -6,20 +6,27 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/17 19:53:03 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/19 00:35:35 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 // appliquer modificateur de longueur puis largeur du champs puis precision puis attribut
 
-int		is_dioux(t_format format)
+int		is_str(char type)
 {
-	if (format.type == 'd' || format.type == 'i' || format.type == 'o')
+	if (type == 'c' || type == 'C' || type == 's' || type == 's')
 		return (1);
-	if (format.type == 'u' || format.type == 'x' || format.type == 'X')
+	return (0);
+}
+
+int		is_dioux(char type)
+{
+	if (type == 'd' || type == 'i' || type == 'o')
 		return (1);
-	if (format.type == 'D' || format.type == 'O' || format.type == 'U')
+	if (type == 'u' || type == 'x' || type == 'X')
+		return (1);
+	if (type == 'D' || type == 'O' || type == 'U')
 		return (2);
 	return (0);
 }
@@ -29,7 +36,7 @@ int		add_modifier(t_format format, va_list lst)
 	int length;
 
 	length = 0;
-	if (format.modifier == NULL || is_dioux(format) == 0)
+	if (format.modifier == NULL || is_dioux(format.type) == 0)
 		return (0);
 	if (ft_strcmp(format.modifier, "hh") == 0)
 		length = write_nbr(format, lst, (long long)(char)va_arg(lst, int));
@@ -139,27 +146,20 @@ int		ft_type(t_format *format, va_list lst, char str)
 
 	//printf("c : %c\n", str);
 	length = 0;
-	format->type = str;
-	if (is_dioux(*format) > 0 || str == 'p')
+	//format->type = str;
+	if (is_dioux(str) > 0 || str == 'p')
 	{
+		format->type = str;
 		if (format->modifier != NULL && str != 'U')
 			length = add_modifier(*format, lst);
 		else
 			length = ft_dioux(*format, lst, str);
 	}
-	else
-		length = ft_sc(*format, lst, str);
-	//length <= 0 ? (length = ft_sc(*format, lst, str)) : 0;
-	/*if (ft_dioux(format, lst, str) == 0)// && seconde fonction type)
-	{
-		ft_putchar(str);
-		return (0);
-	}*/
-	//ft_putendl("here");
-	if (str == 'b')				// bonus pas integrer float et double fonction
+	else if (str == 'b')				// bonus pas integrer float et double fonction
 		ft_putstr(ft_itoab(va_arg(lst, unsigned int)));
-	if (str == '%')
+	else if (str == '%')
 	{
+		format->type = str;
 		// repetion de ce bout de code dans write nbr
 		length = 0;
 		if (format->flags != '-')
@@ -169,10 +169,22 @@ int		ft_type(t_format *format, va_list lst, char str)
 			add_width(*format, lst, "%", &length);
 		return (1 + length);
 	}
-	/*else
+	else if (str == 'c' || str == 'C' || str == 's' || str == 'S')
+	{
+		format->type = str;
+		length = ft_sc(*format, lst, str);
+	}
+	else if (is_dioux(str) == 0 && is_str(str) == 0 && str != 'p' && str != 'b' && is_flags(str) == 0)
 	{
 		ft_putchar(str); //affiche le type ?
+		length++;
+	}
+	//length <= 0 ? (length = ft_sc(*format, lst, str)) : 0;
+	/*if (ft_dioux(format, lst, str) == 0)// && seconde fonction type)
+	{
+		ft_putchar(str);
 		return (0);
 	}*/
+	//ft_putendl("here");
 	return (length);
 }

@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/18 21:08:43 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/19 00:32:36 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*fill_zero(t_format format, char *type, int width)
 
 	if (type == NULL || width <= 0)
 		return (NULL);
-	if (is_dioux(format) == 0 && format.type != 'p')
+	if (is_dioux(format.type) == 0 && format.type != 'p')
 		return (NULL);
 	i = 0;
 	j = 0;
@@ -215,7 +215,7 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	else
 		word = ft_lltoa(nbr);
 	b = no_print(format, word);
-	format.type == 'p' ? (word = ft_strjoinfree("10", word)) : 0; // 0x ou 0x10 ?
+	format.type == 'p' ? (word = ft_strjoinfree("7fff", word)) : 0; // 0x ou 0x10 ?
 	word = add_precision(format, lst, word, &width);
 	width = 0;
 	word = add_prenbr(format, word);
