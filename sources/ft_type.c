@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/19 00:35:35 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/19 18:46:55 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		ft_dioux(t_format format, va_list lst, char str) // ajout p
 	else if (str == 'p')
 	{
 		//ft_putstr("0x");
-		length = write_nbr(format, lst, (long long)va_arg(lst, int));
+		length = write_nbr(format, lst, (long long)va_arg(lst, long long));
 		//length = length + 2;
 	}
 	else
@@ -104,17 +104,17 @@ int	ft_sc(t_format format, va_list lst, char str)
 		word = (wchar_t *)va_arg(lst, char *);
 	if (str == 'c' || str == 'C')
 	{
-		format.flags != '-' ? add_width(format, lst, "1", &width) : 0;
+		format.flags != '-' ? add_width(format, lst, L"1", &width) : 0;
 		str == 'c' ? ft_putchar((char)va_arg(lst, int)) : 0;
 		str == 'C' ? ft_putwchar(va_arg(lst, wchar_t)) : 0;
-		format.flags == '-' ? add_width(format, lst, "1", &width) : 0;
+		format.flags == '-' ? add_width(format, lst, L"1", &width) : 0;
 		width++;
 	}
 	if (word == NULL && (str == 's' || str == 'S'))
 		word =(wchar_t *)"(null)";
 	if (word != NULL)
 	{
-		format.flags != '-' ? add_width(format, lst, (char *)word, &width) : 0;
+		format.flags != '-' ? add_width(format, lst, word, &width) : 0;
 		if (format.precision != NULL)
 		{
 			if (str == 's' && format.precision[0] != '.')
@@ -126,7 +126,7 @@ int	ft_sc(t_format format, va_list lst, char str)
 			ft_putstr((char *)word);
 		else
 			ft_putwstr(word);
-		format.flags == '-' ? add_width(format, lst, (char *)word, &width) : 0;
+		format.flags == '-' ? add_width(format, lst, word, &width) : 0;
 	}
 	if (format.precision != NULL && format.precision[0] != '.' && (str == 's' || str == 'S') && ft_atoi(format.precision) < ft_strlen((char *)word))
 		width = ft_atoi(format.precision) + width;
@@ -163,10 +163,10 @@ int		ft_type(t_format *format, va_list lst, char str)
 		// repetion de ce bout de code dans write nbr
 		length = 0;
 		if (format->flags != '-')
-			add_width(*format, lst, "%", &length);
+			add_width(*format, lst, L"%", &length);
 		ft_putchar(str);
 		if (format->flags == '-')
-			add_width(*format, lst, "%", &length);
+			add_width(*format, lst, L"%", &length);
 		return (1 + length);
 	}
 	else if (str == 'c' || str == 'C' || str == 's' || str == 'S')
@@ -176,7 +176,9 @@ int		ft_type(t_format *format, va_list lst, char str)
 	}
 	else if (is_dioux(str) == 0 && is_str(str) == 0 && str != 'p' && str != 'b' && is_flags(str) == 0)
 	{
+		format->flags != '-' ? add_width(*format, lst, L"s", &length) : 0;
 		ft_putchar(str); //affiche le type ?
+		format->flags == '-' ? add_width(*format, lst, L"s", &length) : 0;
 		length++;
 	}
 	//length <= 0 ? (length = ft_sc(*format, lst, str)) : 0;
