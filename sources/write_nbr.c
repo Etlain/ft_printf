@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/19 19:28:33 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 18:36:39 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,8 @@ char	*add_width(t_format format, va_list lst, wchar_t *type, int *width) // refl
 		*width = ft_atoi(format.width) - lgt;
 	else
 		return ((char *)type);
-	/*if (format.flags != '\0')
-	{*/
 	if (no_print(format, (char *)type) == 1)
 		(*width)++;
-	/*if (format.pre == '#' && (format.type == 'x' || format.type == 'X') && format.flags != '-')
-		*width = *width - 2;*/
-	/*if (format.pre == '#' && (format.type == 'o' || format.type == 'O') && format.flags != '-')
-		*width = *width - 1;*/
 	if (format.precision == NULL)
 		format.flags == '0' ? str = fill_zero(format,(char *)type, *width) : 0;
 	/*ft_putnbr(*width);
@@ -126,7 +120,6 @@ char	*add_width(t_format format, va_list lst, wchar_t *type, int *width) // refl
 	ft_putstr("width : ");
 	ft_putnbr(*width);
 	ft_putchar('\n');*/
-	ft_putnbr(ft_strlen((char *)type));
 	if (str != NULL)
 		return (str);
 	i = 0;
@@ -221,12 +214,13 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	if (format.type == 'p' && ft_strncmp(word, "7fff", 4) != 0)
 		ft_strcmp(word, "0") != 0 ? (word = ft_strjoinfree("7fff", word)) : 0; // 0x ou 0x10 ?
 	word = add_precision(format, lst, word, &width);
+	format.type == 'p' ? (word = ft_strjoinfree("0x", word)) : 0;
 	width = 0;
 	word = add_prenbr(format, word);
 	if (format.flags != '-')
 		word = add_width(format, lst, (wchar_t *)word, &width);
 	//word = add_prenbr(format, word);
-	format.type == 'p' ? (word = ft_strjoinfree("0x", word)) : 0; // 0x ou 0x10 ?
+	//format.type == 'p' ? (word = ft_strjoinfree("0x", word)) : 0; // 0x ou 0x10 ?
 	b == 0 ? ft_putstr(word) : 0;
 	if (format.flags == '-')
 		add_width(format, lst, (wchar_t *)word, &width);

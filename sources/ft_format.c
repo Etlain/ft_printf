@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/18 20:59:11 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 18:22:57 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ void	ft_wp(t_format *format, char *str, int *i) //ajout condition '.' pour preci
 			lgt++;
 			j++;
 		}
-		tmp = (char *)malloc(lgt + 1);
+		/*tmp = (char *)malloc(lgt + 1);
+		ft_bzero(tmp, lgt + 1);*/
+		tmp = (char *)ft_memalloc(lgt + 1);
 		ft_strncat(tmp, &str[*i], j - *i);
 		*i = j;
 	}
