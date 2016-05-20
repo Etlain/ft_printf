@@ -6,12 +6,13 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 23:05:39 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/10 20:05:57 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 21:49:00 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+#include <stdio.h>
 static unsigned long long	ft_less(unsigned long long nbr, int *i, int *h)
 {
 	unsigned long long s;
@@ -21,11 +22,13 @@ static unsigned long long	ft_less(unsigned long long nbr, int *i, int *h)
 	while (s < nbr)
 	{
 		s = ft_power(8, *i) * *h;
+		if (s == 0)
+			break ;
 		(*i)++;
 	}
-	if (*i > 20 && (long long)nbr < (long long)0)
+	if (*i > 20 && s == 0)
 	{
-		*i = 22;
+		*i = 21;
 		*h = 1;
 	}
 	s >= nbr ? (*i)-- : 0;

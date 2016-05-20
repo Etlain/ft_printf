@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 20:13:58 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 21:18:58 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ static char	*add_prenbr(t_format format, char *nbr)
 	}
 	if (format.pre == '#' && (format.type == 'o' || format.type == 'O'))
 		nbr[0] != '0' ? (pre = "0") : 0;
-	if (format.sign == ' ' && nbr[0] != '-' && format.type != 'u')
+	if (format.sign == ' ' && nbr[0] != '-' && format.type != 'u' && format.type != 'p')
 		pre = " ";
 	else if (format.type == 'd' || format.type == 'D' || format.type == 'i')
 	{
@@ -213,8 +213,8 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	else
 		word = ft_lltoa(nbr);
 	b = no_print(format, word);
-	if (format.type == 'p' && ft_strncmp(word, "7fff", 4) != 0)
-		ft_strcmp(word, "0") != 0 ? (word = ft_strjoinfree("7fff", word)) : 0; // 0x ou 0x10 ?
+	/*if (format.type == 'p' && ft_strncmp(word, "7fff", 4) != 0)
+		ft_strcmp(word, "0") != 0 ? (word = ft_strjoinfree("7fff", word)) : 0; // 0x ou 0x10 ?*/
 	word = add_precision(format, lst, word, &width);
 	format.type == 'p' ? (word = ft_strjoinfree("0x", word)) : 0;
 	width = 0;

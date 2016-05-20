@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 20:09:31 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 22:00:49 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		add_modifier(t_format format, va_list lst)
 	int length;
 
 	length = 0;
-	if (format.modifier == NULL || is_dioux(format.type) == 0)
+	if (format.modifier == NULL)
 		return (0);
 	if (ft_strcmp(format.modifier, "hh") == 0)
 		length = write_nbr(format, lst, (long long)(char)va_arg(lst, int));
@@ -79,7 +79,7 @@ int		ft_dioux(t_format format, va_list lst, char str) // ajout p
 	else if (str == 'p')
 	{
 		//ft_putstr("0x");
-		length = write_nbr(format, lst, (long long)va_arg(lst, long long));
+		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
 		//length = length + 2;
 	}
 	else
@@ -154,7 +154,7 @@ int		ft_type(t_format *format, va_list lst, char str)
 	if (is_dioux(str) > 0 || str == 'p')
 	{
 		format->type = str;
-		if (format->modifier != NULL && str != 'U')
+		if (format->modifier != NULL && is_dioux(str) == 1)
 			length = add_modifier(*format, lst);
 		else
 			length = ft_dioux(*format, lst, str);

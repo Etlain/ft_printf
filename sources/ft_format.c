@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 18:22:57 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 21:09:27 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_flags(t_format *format, char *str, int *i)
 			format->sign = '+';
 			(*i)++;
 		}
-		else if (str[j] == ' ' && (format->sign == '\0' || format->sign != '+'/*(b = ft_strcmp(format->flags, "+")) == 1*/))
+		else if (str[j] == ' ' && (format->sign == '\0' || format->sign != '+'))
 		{
 			format->sign = ' ';
 			(*i)++;
