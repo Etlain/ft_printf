@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 22:43:44 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 22:51:48 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		add_modifier(t_format format, va_list lst)
 	length = 0;
 	if (format.modifier == NULL)
 		return (0);
-	if (format.type == 'u')
+	if (format.type == 'u' || format.type == 'o' || format.type == 'x' || format.type == 'X')
 		length = add_umodifier(format, lst);
 	else if (ft_strcmp(format.modifier, "hh") == 0)
 		length = write_nbr(format, lst, (long long)(char)va_arg(lst, int));
