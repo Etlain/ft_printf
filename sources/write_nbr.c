@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 18:36:39 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 20:13:58 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,8 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 		word = ft_lltoah(nbr, 2);
 	else if (format.type == 'o' || format.type == 'O')
 		word = ft_lltoao(nbr);
+	else if (format.type == 'u' || format.type == 'U')
+		word = ft_ulltoa((unsigned long long)nbr);
 	else
 		word = ft_lltoa(nbr);
 	b = no_print(format, word);

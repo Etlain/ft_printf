@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 18:08:34 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 20:09:31 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int		ft_dioux(t_format format, va_list lst, char str) // ajout p
 int	ft_sc(t_format format, va_list lst, char str)
 {
 	wchar_t *word;
+	wchar_t c;
 	int width;
 
 	width = 0;
@@ -106,9 +107,12 @@ int	ft_sc(t_format format, va_list lst, char str)
 	{
 		format.flags != '-' ? add_width(format, lst, L"1", &width) : 0;
 		str == 'c' ? ft_putchar((char)va_arg(lst, int)) : 0;
-		str == 'C' ? ft_putwchar(va_arg(lst, wchar_t)) : 0;
+		str == 'C' ? ft_putwchar((c = va_arg(lst, wchar_t))) : 0;
 		format.flags == '-' ? add_width(format, lst, L"1", &width) : 0;
-		width++;
+		if (str == 'C')
+			width = ft_sizewchar((long)c);
+		else
+			width++;
 	}
 	if (word == NULL && (str == 's' || str == 'S'))
 		word =(wchar_t *)"(null)";

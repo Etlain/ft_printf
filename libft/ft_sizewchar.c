@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_wstrlen.c                                       :+:      :+:    :+:   */
+/*   ft_sizewchar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 16:56:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 18:58:01 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 18:56:39 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,4 @@ int	ft_sizewchar(long n)
 	else if (size < 22)
 		return (4);
 	return (0);
-}
-
-int	ft_wstrlen(wchar_t *str)
-{
-	int len;
-	int i;
-
-	i = 0;
-	len = 0;
-	while (str[i] != '\0')
-	{
-		len = len + ft_sizewchar((long)str[i]);
-		i++;
-	}
-	return (len);
 }
