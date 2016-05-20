@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 22:00:49 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 22:43:44 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		is_dioux(char type)
 	return (0);
 }
 
-int		add_modifier(t_format format, va_list lst)
+int		add_umodifier(t_format format, va_list lst)
 {
 	int length;
 
@@ -39,6 +39,30 @@ int		add_modifier(t_format format, va_list lst)
 	if (format.modifier == NULL)
 		return (0);
 	if (ft_strcmp(format.modifier, "hh") == 0)
+		length = write_nbr(format, lst, (long long)(unsigned char)va_arg(lst, int));
+	else if (format.modifier[0] == 'h')
+		length = write_nbr(format, lst, (long long)(unsigned short)va_arg(lst, int));
+	else if (format.modifier[0] == 'l')
+		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
+	else if (ft_strcmp(format.modifier, "ll") == 0)
+		length = write_nbr(format, lst, va_arg(lst, unsigned long long));
+	else if (format.modifier[0] == 'j')
+		length = write_nbr(format, lst, (long long)va_arg(lst, uintmax_t));
+	else if (format.modifier[0] == 'z')
+		length = write_nbr(format, lst, (long long)va_arg(lst, size_t));
+	return (length);
+}
+
+int		add_modifier(t_format format, va_list lst)
+{
+	int length;
+
+	length = 0;
+	if (format.modifier == NULL)
+		return (0);
+	if (format.type == 'u')
+		length = add_umodifier(format, lst);
+	else if (ft_strcmp(format.modifier, "hh") == 0)
 		length = write_nbr(format, lst, (long long)(char)va_arg(lst, int));
 	else if (format.modifier[0] == 'h')
 		length = write_nbr(format, lst, (long long)(short)va_arg(lst, int));
@@ -115,7 +139,10 @@ int	ft_sc(t_format format, va_list lst, char str)
 			width++;
 	}
 	if (word == NULL && (str == 's' || str == 'S'))
-		word =(wchar_t *)"(null)";
+	{
+		str == 's' ? (word =(wchar_t *)"(null)") : 0;
+		str == 'S' ? (word = L"(null)") : 0;
+	}
 	if (word != NULL)
 	{
 		format.flags != '-' ? add_width(format, lst, word, &width) : 0;

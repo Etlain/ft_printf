@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/19 00:35:23 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/20 22:39:11 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,29 @@ int main()
 	printf("\n");
 	ft = ft_printf("% ");
 	printf("\n");*/
-	pf = printf("printf    : %s%p%d%p%s%p%p%s\n", "a", &pf, 1, 2, truc, "b", &pf, truc);
-	ft = ft_printf("ft_printf : %s%p%d%p%s%p%p%s\n", "a", &pf, 1, 2, truc, "b", &pf, truc);
+	int i;
+	//unsigned long l;
+	char c;
+	char **d;
+	unsigned long l;
+	int g;
+
+	printf("printf    : ");
+	pf = printf("{%S}", NULL);
+	printf("\n");
+	ft_printf("ft_printf : ");
+	ft = ft_printf("{%S}", NULL);
+	ft_printf("\n");
 	printf("printf : %d\n", pf);
 	printf("ft_printf : %d\n", ft);
+	//printf("%s\n", ft_itoa(SHRT_MAX - 42));
+	/*printf("%lu\n", ft_power(8, 21) * 1);*/
+	//l = &ft;
+	//g = &ft;
+	//ft_printf("long : %llx\n", l);
+	//printf("int  : %llx", g);
+	//pf = printf("ulltoa : %s", ft_ulltoa(ULONG_MAX));
+	//printf("%d\n", ft_wstrlen(L"我是一只猫。"/*L"é"*/));
 	/*printf("printf :    %hhd\n", (char)42);
 	ft_printf("ft_printf : %x\n", LONG_MAX, 4);*/
 	//pf = printf("%5%\n");
