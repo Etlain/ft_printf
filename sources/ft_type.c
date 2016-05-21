@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 22:51:48 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/21 20:34:20 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,14 @@ int	ft_sc(t_format format, va_list lst, char str)
 		str == 's' ? (word =(wchar_t *)"(null)") : 0;
 		str == 'S' ? (word = L"(null)") : 0;
 	}
+	else if ((str == 's' || str == 'S') && format.flags == '0' && format.precision != NULL && (format.precision[0] == '.' || ft_strcmp(format.precision, "0") == 0))
+	{
+		str = 's';
+		format.type = 's';
+		word = (wchar_t *)ft_strnew(ft_atoi(format.width));
+		ft_init_str((char *)word, '0', ft_atoi(format.width));
+		/*ft_putendl((char *)word);*/
+	}
 	if (word != NULL)
 	{
 		format.flags != '-' ? add_width(format, lst, word, &width) : 0;
@@ -150,8 +158,12 @@ int	ft_sc(t_format format, va_list lst, char str)
 		{
 			if (str == 's' && format.precision[0] != '.')
 				ft_putnstr((char *)word, ft_atoi(format.precision));
-			if (str == 'S' && format.precision[0] != '.')
+			else if (str == 'S' && format.precision[0] != '.')
 				ft_putnwstr(word, ft_atoi(format.precision));
+			else if (str == 's' && format.precision[0] == '.' && format.flags == '0')
+				ft_putstr((char *)word);
+			else if (str == 'S' && format.precision[0] == '.' && format.flags == '0')
+				ft_putwstr(word);
 		}
 		else if (str == 's')
 			ft_putstr((char *)word);
