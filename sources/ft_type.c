@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/21 20:34:20 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/23 18:32:28 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,11 @@ int	ft_sc(t_format format, va_list lst, char str)
 
 	width = 0;
 	word = NULL;
-	if (str == 's' && format.modifier != NULL && format.modifier[0] == 'l')
-		str = 'S';
+	if (format.modifier != NULL && format.modifier[0] == 'l')
+	{
+		str == 's' ? str = 'S' : 0;
+		str == 'c' ? str = 'C' : 0;
+	}
 	if (str == 'S')
 		word = va_arg(lst, wchar_t *);
 	else if (str == 's')
@@ -138,18 +141,21 @@ int	ft_sc(t_format format, va_list lst, char str)
 		else
 			width++;
 	}
-	if (word == NULL && (str == 's' || str == 'S'))
+	if ((str == 's' || str == 'S') && format.precision != NULL && (format.precision[0] == '.'/* || ft_strcmp(format.precision, "0") == 0*/))
+	{
+		//word = (wchar_t *)fill_zero(format, "", width);
+		format.type = 's';
+		word = L"";
+		str = 's';
+		/*format.type = 's';
+		word = (wchar_t *)ft_strnew(ft_atoi(format.width));
+		ft_init_str((char *)word, '0', ft_atoi(format.width));
+		ft_putendl((char *)word);*/
+	}
+	else if (word == NULL && (str == 's' || str == 'S'))
 	{
 		str == 's' ? (word =(wchar_t *)"(null)") : 0;
 		str == 'S' ? (word = L"(null)") : 0;
-	}
-	else if ((str == 's' || str == 'S') && format.flags == '0' && format.precision != NULL && (format.precision[0] == '.' || ft_strcmp(format.precision, "0") == 0))
-	{
-		str = 's';
-		format.type = 's';
-		word = (wchar_t *)ft_strnew(ft_atoi(format.width));
-		ft_init_str((char *)word, '0', ft_atoi(format.width));
-		/*ft_putendl((char *)word);*/
 	}
 	if (word != NULL)
 	{
@@ -160,10 +166,10 @@ int	ft_sc(t_format format, va_list lst, char str)
 				ft_putnstr((char *)word, ft_atoi(format.precision));
 			else if (str == 'S' && format.precision[0] != '.')
 				ft_putnwstr(word, ft_atoi(format.precision));
-			else if (str == 's' && format.precision[0] == '.' && format.flags == '0')
+			/*else if (str == 's' && format.precision[0] == '.' && format.flags == '0')
 				ft_putstr((char *)word);
 			else if (str == 'S' && format.precision[0] == '.' && format.flags == '0')
-				ft_putwstr(word);
+				ft_putwstr(word);*/
 		}
 		else if (str == 's')
 			ft_putstr((char *)word);
@@ -202,7 +208,7 @@ int		ft_type(t_format *format, va_list lst, char str)
 		ft_putstr(ft_itoab(va_arg(lst, unsigned int)));
 	else if (str == '%')
 	{
-		format->type = str;
+		format->type = 's';
 		// repetion de ce bout de code dans write nbr
 		length = 0;
 		if (format->flags != '-')
@@ -219,6 +225,7 @@ int		ft_type(t_format *format, va_list lst, char str)
 	}
 	else if (is_dioux(str) == 0 && is_str(str) == 0 && str != 'p' && str != 'b' && is_flags(str) == 0)
 	{
+		format->type = 's';
 		format->flags != '-' ? add_width(*format, lst, L"s", &length) : 0;
 		ft_putchar(str); //affiche le type ?
 		format->flags == '-' ? add_width(*format, lst, L"s", &length) : 0;

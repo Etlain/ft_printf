@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/23 02:24:25 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/19 18:43:40 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/23 16:37:05 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		ft_type(t_format *format, va_list lst, char str);
 int		ft_format(va_list lst, const char *s, int *i);
 int		write_nbr(t_format format, va_list lst, long long nbr);
 char	*add_width(t_format format, va_list lst, wchar_t *type, int *width);
+char	*fill_zero(t_format format, char *type, int width);
 int		is_dioux(char type);
 int		is_flags(char str);
 

@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 23:05:39 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 21:49:00 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/23 18:00:01 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static unsigned long long	ft_less(unsigned long long nbr, int *i, int *h)
 	unsigned long long s;
 
 	s = 0;
-	*h = 7;
 	while (s < nbr)
 	{
 		s = ft_power(8, *i) * *h;
@@ -31,8 +30,9 @@ static unsigned long long	ft_less(unsigned long long nbr, int *i, int *h)
 		*i = 21;
 		*h = 1;
 	}
+	s == nbr ? *h = 1 : 0;
 	s >= nbr ? (*i)-- : 0;
-	while (s > nbr || (s <= 0 && nbr != 0))
+	while (s > nbr || (s == 0 && nbr != 0))
 	{
 		*h < 1 ? (*i)-- : 0;
 		*h < 1 ? *h = 7 : 0;
@@ -54,6 +54,7 @@ char						*ft_lltoao(unsigned long long nbr)
 	if (nbr == 0)
 		return ("0");
 	i = 0;
+	h = 7;
 	l = ft_less(nbr, &i, &h);
 	max = i;
 	str = (char *)malloc(sizeof(char) * (i + 1));
