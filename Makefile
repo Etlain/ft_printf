@@ -28,7 +28,7 @@ LIB =   ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c          \
 	ft_ahtoi.c ft_free_tab.c ft_abs.c ft_put_error.c ft_init_str.c        \
 	ft_itoab.c ft_itoah.c ft_itoao.c ft_sizebyte.c ft_putwchar.c          \
 	ft_putwstr.c ft_lltoa.c ft_lltoao.c ft_lltoah.c ft_putnstr.c          \
-	ft_putnwstr.c ft_wstrlen.c ft_sizewchar.c ft_ulltoa.c
+	ft_putnwstr.c ft_wstrlen.c ft_sizewchar.c ft_ulltoa.c ft_wnstrlen.c
 
 PATH_LIB = libft/
 

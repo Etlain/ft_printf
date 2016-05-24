@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 22:39:11 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 13:58:30 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,18 @@ int main()
 	int g;
 
 	printf("printf    : ");
-	pf = printf("{%S}", NULL);
+	pf = printf("%15.4S", L"我是一只猫。");
+	printf("{%d}", ft_wstrlen(L"我是一只猫。"));
 	printf("\n");
 	ft_printf("ft_printf : ");
-	ft = ft_printf("{%S}", NULL);
+	ft = ft_printf("%15.4S", L"我是一只猫。");
+	//ft = ft_printf("{%010d}", 42);
 	ft_printf("\n");
-	printf("printf : %d\n", pf);
+	printf("printf    : %d\n", pf);
 	printf("ft_printf : %d\n", ft);
 	//printf("%s\n", ft_itoa(SHRT_MAX - 42));
-	/*printf("%lu\n", ft_power(8, 21) * 1);*/
+	/*printf("%lu\n", ft_power(8, 21) * 1);
+	printf("%lu\n", LONG_MIN);*/
 	//l = &ft;
 	//g = &ft;
 	//ft_printf("long : %llx\n", l);

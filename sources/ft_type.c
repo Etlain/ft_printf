@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/23 18:32:28 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 14:01:50 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,11 @@ int	ft_sc(t_format format, va_list lst, char str)
 	if ((str == 's' || str == 'S') && format.precision != NULL && (format.precision[0] == '.'/* || ft_strcmp(format.precision, "0") == 0*/))
 	{
 		//word = (wchar_t *)fill_zero(format, "", width);
-		format.type = 's';
+		/*format.type = 's';
 		word = L"";
-		str = 's';
+		str = 's';*/
+		str == 's' ? (word =(wchar_t *)"") : 0;
+		str == 'S' ? (word = L"") : 0;
 		/*format.type = 's';
 		word = (wchar_t *)ft_strnew(ft_atoi(format.width));
 		ft_init_str((char *)word, '0', ft_atoi(format.width));
@@ -181,6 +183,8 @@ int	ft_sc(t_format format, va_list lst, char str)
 		width = ft_atoi(format.precision) + width;
 	else if (word != NULL && str == 's')
 		width = ft_strlen((char *)word) + width;
+	else if (str == 'S' && word != NULL && format.precision != NULL)
+		width = ft_wnstrlen(word, ft_atoi(format.precision)) + width;
 	else if (word != NULL && str == 'S')
 		width = ft_wstrlen(word) + width;
 	if ((str == 's' || str == 'S') && width == 0)

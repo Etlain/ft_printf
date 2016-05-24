@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_wstrlen.c                                       :+:      :+:    :+:   */
+/*   ft_wnstrlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 16:56:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/24 13:37:53 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 13:48:38 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_wstrlen(wchar_t *str)
+int	ft_wnstrlen(wchar_t *str, int lgt)
 {
 	int len;
 	int i;
+	int tmp;
 
 	i = 0;
 	len = 0;
+	tmp = 0;
 	while (str[i] != '\0')
 	{
-		len = len + ft_sizewchar((long)str[i]);
+		tmp = len;
+		len = tmp + ft_sizewchar((long)str[i]);
+		if (len > lgt)
+			break ;
 		i++;
 	}
-	return (len);
+	return (tmp);
 }

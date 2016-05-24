@@ -6,7 +6,7 @@
 /*   By: mmouhssi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 15:42:01 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/20 20:08:01 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 13:41:41 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void			ft_putwstr(wchar_t *str);
 void			ft_putnstr(char *str, int lgt);
 void			ft_putnwstr(wchar_t *str, int lgt);
 int			ft_wstrlen(wchar_t *str);
+int			ft_wnstrlen(wchar_t *str, int lgt);
 int			get_next_line(int const fd, char **line);
 
 #endif

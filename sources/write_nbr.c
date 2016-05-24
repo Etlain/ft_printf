@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/23 18:33:34 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 14:14:48 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*fill_zero(t_format format, char *type, int width)
 void	val_width(t_format format , int *width)
 {
 	//format.flags == '0' ? *width = 0 : 0;
-	if (format.flags == '0' && format.precision == NULL)
+	if (format.flags == '0' && format.precision == NULL && format.type != 'c' && format.type != 'S' && format.type != 's')
 		*width = 0;
 	*width < 0 ? *width = 0 : 0;
 	/*if (format.pre == '#' && (format.type == 'x' || format.type == 'X'))
@@ -97,9 +97,12 @@ char	*add_width(t_format format, va_list lst, wchar_t *type, int *width) // refl
 		lgt = ft_wstrlen(type);
 	else
 		lgt = ft_strlen((char *)type);
-	if ((format.type == 's' || format.type == 'S') && format.precision != NULL && format.precision[0] != '.' && (char *)type != '\0' && ft_atoi(format.precision) < lgt)
+	if (format.type == 's' && format.precision != NULL && format.precision[0] != '.' && (char *)type != '\0' && ft_atoi(format.precision) < lgt)
 		lgt = ft_atoi(format.precision);
+	else if (format.type == 'S' && format.precision != NULL && format.precision[0] != '.' && (char *)type != '\0' && ft_atoi(format.precision) < lgt)
+		lgt = ft_wnstrlen(type, ft_atoi(format.precision));
 	//else if ((format.type == 's' || format.type == 'S') && format.width != NULL && format.precision != NULL && format.precision[0] == '.')
+	/*ft_putwstr(type);*/
 	if (format.width == NULL)
 		return ((char *)type);
 	else if (format.width[0] == '*')
@@ -123,13 +126,15 @@ char	*add_width(t_format format, va_list lst, wchar_t *type, int *width) // refl
 	ft_putstr("width : ");
 	ft_putnbr(*width);
 	ft_putchar('\n');*/
-	if (str != NULL)
+	//ft_putendl("here");
+	if (str != NULL && format.type != 'c' && format.type != 's' && format.type != 'S')
 		return (str);
 	i = 0;
-	if ((format.type == 'c' || format.type == 's' || format.type == 'S') && format.precision != NULL && format.precision[0] == '.' && format.flags == '0')
+	if ((format.type == 'c' || format.type == 's' || format.type == 'S') && format.flags == '0')
 		c = '0';
 	else
 		c = ' ';
+	//ft_putnbr(*width);
 	while (i < *width && *width > 0)
 	{
 		ft_putchar(c);
