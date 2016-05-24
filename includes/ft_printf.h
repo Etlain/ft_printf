@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/23 02:24:25 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/23 16:37:05 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 15:02:51 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ char	*add_width(t_format format, va_list lst, wchar_t *type, int *width);
 char	*fill_zero(t_format format, char *type, int width);
 int		is_dioux(char type);
 int		is_flags(char str);
+int		is_str(char type);
+int		is_unsigned(char type);
 
 #endif

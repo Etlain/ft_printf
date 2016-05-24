@@ -6,64 +6,43 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/21 20:38:39 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 17:45:40 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
 #include <stdio.h>
-int	is_flags(char str)
+char		fill_flags(char flags, int *i)
 {
-	if (str == '+' || str == ' ' || str == '-' || str == '0' || str == '#')
-		return (1);
-	return (0);
+	(*i)++;
+	return (flags);
 }
+
 void	ft_flags(t_format *format, char *str, int *i)
 {
-	//int b;
 	int j;
 
-	//b = 1;
 	j = *i;
 	while (str[j] != '\0' && is_flags(str[j]) == 1)
 	{
 		if (str[j] == '+')
-		{
-			format->sign = '+';
-			(*i)++;
-		}
+			format->sign = fill_flags('+', i);
 		else if (str[j] == ' ' && (format->sign == '\0' || format->sign != '+'))
-		{
-			format->sign = ' ';
-			(*i)++;
-		}
+			format->sign = fill_flags(' ', i);
 		else if (str[j] == '-')
-		{
-			format->flags = '-';
-			(*i)++;
-		}
-		else if (str[j] == '0' && (format->flags == '\0' || format->flags != '-'/*(b = ft_strcmp(format->flags, "-")) == 1*/)) //0 - important precision
-		{
-			format->flags = '0';
-			(*i)++;
-		}
+			format->flags = fill_flags('-', i);
+		else if (str[j] == '0' && (format->flags == '\0' || format->flags != '-'))
+			format->flags = fill_flags('0', i);
 		else if (str[j] == '#')
-		{
-			format->pre = '#';
-			(*i)++;
-		}
-	/*else if (b == 0);*/
+			format->pre = fill_flags('#', i);
 		else
 			return ;
 		j++;
 	}
-	/*format->sign != '\0' ? (*i)++ : 0;
-	format->pre != '\0' ? (*i)++ : 0;
-	format->flags != '\0' ? (*i)++ : 0;*/
 }
 
-void	ft_wp(t_format *format, char *str, int *i) //ajout condition '.' pour precis
+void	ft_wp(t_format *format, va_list lst, char *str, int *i) //ajout condition '.' pour precis
 {
 	int j;
 	int lgt;
@@ -81,14 +60,16 @@ void	ft_wp(t_format *format, char *str, int *i) //ajout condition '.' pour preci
 			lgt++;
 			j++;
 		}
-		/*tmp = (char *)malloc(lgt + 1);
-		ft_bzero(tmp, lgt + 1);*/
 		tmp = (char *)ft_memalloc(lgt + 1);
 		ft_strncat(tmp, &str[*i], j - *i);
 		*i = j;
 	}
 	else if (str[*i] == '*')
+	{
 		tmp = "*";
+		/*format->precision = ft_itoa(va_arg(lst, int));
+		(*i)++;*/
+	}
 	else
 	{
 		b == 1 ? (format->precision = ".") : 0;
@@ -162,6 +143,15 @@ void	ft_putformat(t_format *format) // a effacer
 	ft_putchar('\n');
 }
 
+void	free_format(t_format *format)
+{
+	if (format->precision != NULL && format->precision[0] >= '0' && format->precision[0] <= '9')
+		free(format->precision);
+	if (format->width != NULL && format->width[0] >= '0' && format->width[0] <= '9')
+		free(format->width);
+	free(format);
+}
+
 int		ft_format(va_list lst, const char *s, int *i)
 {
 	t_format *format;
@@ -173,18 +163,10 @@ int		ft_format(va_list lst, const char *s, int *i)
 	format = format_init();
 	while (str[*i] != '\0')
 	{
-		/*ft_putnbr(*i);
-		ft_putchar(' ');*/
 		ft_flags(format, str, i);
-		ft_wp(format, str, i);
-		ft_wp(format, str, i);
+		ft_wp(format, lst, str, i);
+		ft_wp(format, lst, str, i);
 		ft_modifier(format, str, i);
-		/*if (str[*i]== '%')
-		{
-			ft_putchar(str[*i]);
-			//length++;
-			return (1);
-		}*/
 		if ((length = ft_type(format, lst, str[*i])) != 0)
 		{
 			(*i)++;
@@ -192,6 +174,7 @@ int		ft_format(va_list lst, const char *s, int *i)
 		}
 		(*i)++;
 	}
+	free_format(format);
 	//ft_putformat(format);
 	return (length);
 }

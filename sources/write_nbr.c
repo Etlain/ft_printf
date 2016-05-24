@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/24 14:14:48 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 18:02:24 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,11 @@ char	*fill_zero(t_format format, char *type, int width)
 
 	if (type == NULL || width <= 0)
 		return (NULL);
-	if (is_dioux(format.type) == 0 && format.type != 'p' && format.type != 'S')
+	if (is_dioux(format.type) == 0 && format.type != 'p')
 		return (NULL);
 	i = 0;
 	j = 0;
-	/*ft_putnbr(width);
-	ft_putchar('\n');*/
-	//str = type;
-	//str = (char *)malloc(ft_strlen(type) + width);
 	str = (char *)ft_memalloc(ft_strlen(type) + width);
-	//ft_putstr(str);
 	if (type[j] == '-' || type[j] == '+' || type[j] == ' ')
 	{
 		str[i] = type[j];
@@ -63,13 +58,12 @@ char	*fill_zero(t_format format, char *type, int width)
 	}
 	while (i < width)
 	{
-		//str2 = str;
-		//str = ft_strjoin("0", str2);
-		//free(str2);
 		ft_strcat(str, "0");
 		i++;
 	}
 	ft_strcat(str, &type[j]);
+	if (type != NULL && is_dioux(format.type) > 0 && ft_strcmp(type, "0") != 0)
+		free(type);
 	return (str);
 }
 
@@ -151,8 +145,8 @@ static char	*add_precision(t_format format, va_list lst, char *type, int *prcsn)
 	str = NULL;
 	if (format.precision == NULL)
 		return (type);
-	else if (format.precision[0] == '*')
-		*prcsn = va_arg(lst, int) - ft_strlen(type);
+/*	else if (format.precision[0] == '*')
+		*prcsn = va_arg(lst, int) - ft_strlen(type);*/
 	else if (format.precision[0] >= '0' && format.precision[0] <= '9')
 		*prcsn = ft_atoi(format.precision) - ft_strlen(type);
 	else
@@ -165,15 +159,6 @@ static char	*add_precision(t_format format, va_list lst, char *type, int *prcsn)
 	if (str != NULL)
 		return (str);
 	return (type);
-}
-
-int	is_unsigned(char str)
-{
-	if (str == 'u' || str == 'U' || str == 'x' || str == 'X')
-		return (1);
-	else if (str == 'o' || str == 'O' || str == 'p')
-		return (1);
-	return (0);
 }
 
 static char	*add_prenbr(t_format format, char *nbr)
@@ -204,7 +189,7 @@ static char	*add_prenbr(t_format format, char *nbr)
 	}
 	return (nbr);
 }
-
+/*
 char	*ft_strjoinfree(char *s1, char *s2)
 {
 	char *str;
@@ -214,18 +199,24 @@ char	*ft_strjoinfree(char *s1, char *s2)
 	str = ft_strjoin(s1, s2);
 	//free(s2);
 	return (str);
-}
+}*/
 
 int		write_nbr(t_format format, va_list lst, long long nbr)
 {
 	char *word;
+	char *tmp;
 	int width;
 	int b;
+	int b_f;
 
 	word = NULL;
 	width = 0;
+	b_f = 0;
 	if (format.type == 'x' || format.type == 'p')
+	{
 		word = ft_lltoah(nbr, 1);
+		b_f = 1;
+	}
 	else if (format.type == 'X')
 		word = ft_lltoah(nbr, 2);
 	else if (format.type == 'o' || format.type == 'O')
@@ -235,44 +226,44 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	else
 		word = ft_lltoa(nbr);
 	b = no_print(format, word);
-	/*if (format.type == 'p' && ft_strncmp(word, "7fff", 4) != 0)
-		ft_strcmp(word, "0") != 0 ? (word = ft_strjoinfree("7fff", word)) : 0; // 0x ou 0x10 ?*/
 	if (format.type == 'p' && ft_strcmp(word, "0") == 0 && b == 1)
 	{
-		word = ft_strjoinfree(word, "x");
+		tmp = word;
+		word = ft_strjoin(tmp, "x");
+		if (tmp != NULL && is_dioux(format.type) > 0 && ft_strcmp(tmp, "0") != 0)
+			free(tmp);
 		b = 0;
+		b_f = 1;
 	}
 	word = add_precision(format, lst, word, &width);
-	//format.type == 'p' ? (word = ft_strjoinfree("0x", word)) : 0;
 	if (format.type == 'p' && ft_strcmp(word, "0x") != 0)
-		word = ft_strjoinfree("0x", word);
+	{
+		tmp = word;
+		word = ft_strjoin("0x", tmp);
+		if (tmp != NULL && is_dioux(format.type) > 0 && ft_strcmp(tmp, "0") != 0)
+			free(tmp);
+		b_f = 1;
+	}
 	width = 0;
 	word = add_prenbr(format, word);
 	if (format.flags != '-')
 		word = add_width(format, lst, (wchar_t *)word, &width);
-	//word = add_prenbr(format, word);
-	//format.type == 'p' ? (word = ft_strjoinfree("0x", word)) : 0; // 0x ou 0x10 ?
 	if (b == 0)
 		ft_putstr(word);
-	/*else if (b == 1 && format.type == 'p')
-		ft_putnstr(word, 2);*/
 	if (format.flags == '-')
 		add_width(format, lst, (wchar_t *)word, &width);
-	/*if (word == NULL)
-		return (0);*/
-	/*ft_putstr("width : ");
-	ft_putnbr(width);
-	ft_putchar('\n');*/
-	/*ft_putstr("word : ");
-	ft_putnbr(ft_strlen(word));
-	ft_putchar('\n');*/
 	b == 0 ? (width = width + ft_strlen(word)) : 0;
-	/*if (b == 0)
-		(width = width + ft_strlen(word));*/
 	if (b == 1 && width == 0)
 		width = -1;
-	/*ft_putendl("haha nelson");
-	ft_putnbr(width);*/
 	word == NULL ? width = 0 : 0;
+	/*if (format.flags == '0' && width > 0 && word != NULL && (is_dioux(format.type) > 0 || format.type == 'p'))
+		free(word);*/
+	/*if (word != NULL && b_f == 1 && ft_strcmp(word, "0") == 1)
+		free(word);*/
+	if (word != NULL && is_dioux(format.type) > 0 && ft_strcmp(word, "0") != 0)
+		free(word);
+	/*else if (b_f == 1)
+		free(word);*/
+	//free(word);
 	return (width);
 }

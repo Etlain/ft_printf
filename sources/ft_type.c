@@ -6,30 +6,12 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/24 14:01:50 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 17:12:06 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 // appliquer modificateur de longueur puis largeur du champs puis precision puis attribut
-
-int		is_str(char type)
-{
-	if (type == 'c' || type == 'C' || type == 's' || type == 's')
-		return (1);
-	return (0);
-}
-
-int		is_dioux(char type)
-{
-	if (type == 'd' || type == 'i' || type == 'o')
-		return (1);
-	if (type == 'u' || type == 'x' || type == 'X')
-		return (1);
-	if (type == 'D' || type == 'O' || type == 'U')
-		return (2);
-	return (0);
-}
 
 int		add_umodifier(t_format format, va_list lst)
 {
@@ -96,19 +78,12 @@ int		ft_dioux(t_format format, va_list lst, char str) // ajout p
 		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
 	else if (str == 'x')
 		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
-		//ft_putendl("hehe");
-		//ft_putnbr(length);
 	else if (str == 'X')
 		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
 	else if (str == 'p')
-	{
-		//ft_putstr("0x");
 		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
-		//length = length + 2;
-	}
 	else
 		return (-1);
-	//ft_putendl("here");
 	return (length);
 }
 
@@ -143,16 +118,8 @@ int	ft_sc(t_format format, va_list lst, char str)
 	}
 	if ((str == 's' || str == 'S') && format.precision != NULL && (format.precision[0] == '.'/* || ft_strcmp(format.precision, "0") == 0*/))
 	{
-		//word = (wchar_t *)fill_zero(format, "", width);
-		/*format.type = 's';
-		word = L"";
-		str = 's';*/
 		str == 's' ? (word =(wchar_t *)"") : 0;
 		str == 'S' ? (word = L"") : 0;
-		/*format.type = 's';
-		word = (wchar_t *)ft_strnew(ft_atoi(format.width));
-		ft_init_str((char *)word, '0', ft_atoi(format.width));
-		ft_putendl((char *)word);*/
 	}
 	else if (word == NULL && (str == 's' || str == 'S'))
 	{
@@ -168,10 +135,6 @@ int	ft_sc(t_format format, va_list lst, char str)
 				ft_putnstr((char *)word, ft_atoi(format.precision));
 			else if (str == 'S' && format.precision[0] != '.')
 				ft_putnwstr(word, ft_atoi(format.precision));
-			/*else if (str == 's' && format.precision[0] == '.' && format.flags == '0')
-				ft_putstr((char *)word);
-			else if (str == 'S' && format.precision[0] == '.' && format.flags == '0')
-				ft_putwstr(word);*/
 		}
 		else if (str == 's')
 			ft_putstr((char *)word);
@@ -195,9 +158,9 @@ int	ft_sc(t_format format, va_list lst, char str)
 
 int		ft_type(t_format *format, va_list lst, char str)
 {
+	//char *s;
 	int length;
 
-	//printf("c : %c\n", str);
 	length = 0;
 	//format->type = str;
 	if (is_dioux(str) > 0 || str == 'p')
@@ -209,7 +172,12 @@ int		ft_type(t_format *format, va_list lst, char str)
 			length = ft_dioux(*format, lst, str);
 	}
 	else if (str == 'b')				// bonus pas integrer float et double fonction
+	{
 		ft_putstr(ft_itoab(va_arg(lst, unsigned int)));
+		/*s = ft_itoab(va_arg(lst, unsigned int));
+		ft_putstr(s);
+		free(s);*/
+	}
 	else if (str == '%')
 	{
 		format->type = 's';
@@ -235,12 +203,5 @@ int		ft_type(t_format *format, va_list lst, char str)
 		format->flags == '-' ? add_width(*format, lst, L"s", &length) : 0;
 		length++;
 	}
-	//length <= 0 ? (length = ft_sc(*format, lst, str)) : 0;
-	/*if (ft_dioux(format, lst, str) == 0)// && seconde fonction type)
-	{
-		ft_putchar(str);
-		return (0);
-	}*/
-	//ft_putendl("here");
 	return (length);
 }
