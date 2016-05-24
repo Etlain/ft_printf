@@ -6,13 +6,13 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 23:05:39 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/23 18:00:01 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 19:13:42 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-#include <stdio.h>
+//#include <stdio.h>
 static unsigned long long	ft_less(unsigned long long nbr, int *i, int *h)
 {
 	unsigned long long s;
@@ -52,7 +52,11 @@ char						*ft_lltoao(unsigned long long nbr)
 	int					max;
 
 	if (nbr == 0)
-		return ("0");
+	{
+		str = (char *)ft_memalloc(2);
+		strcat(str, "0");
+		return (str);
+	}
 	i = 0;
 	h = 7;
 	l = ft_less(nbr, &i, &h);

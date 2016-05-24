@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/24 17:12:06 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 18:32:29 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int	ft_sc(t_format format, va_list lst, char str)
 
 int		ft_type(t_format *format, va_list lst, char str)
 {
-	//char *s;
+	char *s;
 	int length;
 
 	length = 0;
@@ -174,9 +174,11 @@ int		ft_type(t_format *format, va_list lst, char str)
 	else if (str == 'b')				// bonus pas integrer float et double fonction
 	{
 		ft_putstr(ft_itoab(va_arg(lst, unsigned int)));
-		/*s = ft_itoab(va_arg(lst, unsigned int));
+		/*s = NULL;
+		s = ft_itoab(va_arg(lst, unsigned int));
 		ft_putstr(s);
-		free(s);*/
+		if (s != NULL && ft_strcmp(s, "0") != 0)
+			free(s);*/
 	}
 	else if (str == '%')
 	{

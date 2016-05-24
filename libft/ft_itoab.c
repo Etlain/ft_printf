@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/04 22:36:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/04/19 22:20:33 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 19:14:25 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ char		*ft_itoab(unsigned int nbr)
 	int		i;
 
 	if (nbr == 0)
-		return ("0");
+	{
+		str = (char *)ft_memalloc(2);
+		strcat(str, "0");
+		return (str);
+	}
 	i = 0;
 	p = 0;
 	while (p < nbr)

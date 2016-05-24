@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/24 18:02:24 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 19:26:42 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,10 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 		b_f = 1;
 	}
 	else if (format.type == 'X')
+	{
+		//ft_putendl("here");
 		word = ft_lltoah(nbr, 2);
+	}
 	else if (format.type == 'o' || format.type == 'O')
 		word = ft_lltoao(nbr);
 	else if (format.type == 'u' || format.type == 'U')
@@ -230,7 +233,7 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	{
 		tmp = word;
 		word = ft_strjoin(tmp, "x");
-		if (tmp != NULL && is_dioux(format.type) > 0 && ft_strcmp(tmp, "0") != 0)
+		if (tmp != NULL && is_dioux(format.type) > 0)
 			free(tmp);
 		b = 0;
 		b_f = 1;
@@ -240,7 +243,7 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	{
 		tmp = word;
 		word = ft_strjoin("0x", tmp);
-		if (tmp != NULL && is_dioux(format.type) > 0 && ft_strcmp(tmp, "0") != 0)
+		if (tmp != NULL)
 			free(tmp);
 		b_f = 1;
 	}
@@ -260,7 +263,7 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 		free(word);*/
 	/*if (word != NULL && b_f == 1 && ft_strcmp(word, "0") == 1)
 		free(word);*/
-	if (word != NULL && is_dioux(format.type) > 0 && ft_strcmp(word, "0") != 0)
+	if (word != NULL /*&& is_dioux(format.type) > 0 && ft_strcmp(word, "0") != 0*/)
 		free(word);
 	/*else if (b_f == 1)
 		free(word);*/
