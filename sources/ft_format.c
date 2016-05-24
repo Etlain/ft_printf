@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/24 17:45:40 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/24 20:50:29 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	ft_flags(t_format *format, char *str, int *i)
 			format->flags = fill_flags('0', i);
 		else if (str[j] == '#')
 			format->pre = fill_flags('#', i);
-		else
-			return ;
+		/*else
+			return ;*/
 		j++;
 	}
 }
@@ -78,11 +78,13 @@ void	ft_wp(t_format *format, va_list lst, char *str, int *i) //ajout condition '
 	b == 1 ? format->precision = tmp : (format->width = tmp);
 }
 
-int	ft_modifier(t_format *format, char *str, int *i)
+void		ft_modifier(t_format *format, char *str, int *i)
 {
 	if (str[*i] == 'h' && str[*i + 1] == 'h')
 	{
+		//if (format->modifier != NULL)
 		format->modifier = "hh";
+		//else
 		(*i)++;
 	}
 	else if (str[*i] == 'h')
@@ -99,9 +101,8 @@ int	ft_modifier(t_format *format, char *str, int *i)
 	else if (str[*i] == 'z')
 		format->modifier = "z";
 	else
-		return (0);
+		return ;
 	(*i)++;
-	return (1);
 }
 
 t_format	*format_init()
@@ -157,12 +158,14 @@ int		ft_format(va_list lst, const char *s, int *i)
 	t_format *format;
 	int	length;
 	char *str;
+	int b;
 
 	str = (char *)s;
 	length = 0;
 	format = format_init();
 	while (str[*i] != '\0')
 	{
+		b = *i;
 		ft_flags(format, str, i);
 		ft_wp(format, lst, str, i);
 		ft_wp(format, lst, str, i);
@@ -172,7 +175,8 @@ int		ft_format(va_list lst, const char *s, int *i)
 			(*i)++;
 			break ;
 		}
-		(*i)++;
+		if (*i == b)
+			(*i)++;
 	}
 	free_format(format);
 	//ft_putformat(format);
