@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRC =   ft_printf.c ft_format.c ft_type.c write_nbr.c
+SRC =   ft_printf.c ft_format.c ft_type.c write_nbr.c ft_is.c
 
 OBJ = $(SRC:.c=.o)
 

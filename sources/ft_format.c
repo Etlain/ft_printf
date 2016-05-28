@@ -6,39 +6,28 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/24 20:50:29 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/28 17:15:05 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
 #include <stdio.h>
-char		fill_flags(char flags, int *i)
-{
-	(*i)++;
-	return (flags);
-}
-
 void	ft_flags(t_format *format, char *str, int *i)
 {
-	int j;
-
-	j = *i;
-	while (str[j] != '\0' && is_flags(str[j]) == 1)
+	while (str[*i] != '\0' && is_flags(str[*i]) == 1)
 	{
-		if (str[j] == '+')
-			format->sign = fill_flags('+', i);
-		else if (str[j] == ' ' && (format->sign == '\0' || format->sign != '+'))
-			format->sign = fill_flags(' ', i);
-		else if (str[j] == '-')
-			format->flags = fill_flags('-', i);
-		else if (str[j] == '0' && (format->flags == '\0' || format->flags != '-'))
-			format->flags = fill_flags('0', i);
-		else if (str[j] == '#')
-			format->pre = fill_flags('#', i);
-		/*else
-			return ;*/
-		j++;
+		if (str[*i] == '+')
+			format->sign = '+';
+		else if (str[*i] == ' ' && (/*format->sign == '\0' ||*/ format->sign != '+'))
+			format->sign = ' ';
+		else if (str[*i] == '-')
+			format->flags = '-';
+		else if (str[*i] == '0' && format->flags != '-'/* && format->precision == NULL*/)
+			format->flags = '0';
+		else if (str[*i] == '#')
+			format->pre = '#';
+		(*i)++;
 	}
 }
 
@@ -49,8 +38,12 @@ void	ft_wp(t_format *format, va_list lst, char *str, int *i) //ajout condition '
 	int b;
 	char *tmp;
 
+	/*if (format->flags == '0' && str[*i] == '.')
+		format->flags = '\0';*/
 	str[*i] == '.' ? b = 1 : (b = 0);
-	str[*i] == '.' ? (*i)++ : 0;
+	/*str[*i] == '.' ? (*i)++ : 0;*/
+	while (str[*i] == '.')
+		(*i)++;
 	if (str[*i] >= '0' && str[*i] <= '9')
 	{
 		j = *i;
@@ -78,31 +71,49 @@ void	ft_wp(t_format *format, va_list lst, char *str, int *i) //ajout condition '
 	b == 1 ? format->precision = tmp : (format->width = tmp);
 }
 
+int			is_modifier(char *str)
+{
+	if (str == NULL)
+		return (0);
+	else if (ft_strncmp(str, "ll", 2) == 0 || str[0] == 'z')
+		return (5);
+	else if (str[0] == 'l')
+		return (4);
+	else if (str[0] == 'j')
+		return (3);
+	else if (ft_strncmp(str, "hh", 2) == 0)
+		return (1);
+	else if (str[0] == 'h')
+		return (2);
+	return (0);
+}
+
 void		ft_modifier(t_format *format, char *str, int *i)
 {
-	if (str[*i] == 'h' && str[*i + 1] == 'h')
+	while (str[*i] != '\0' && is_modifier(&str[*i]) > 0)
 	{
-		//if (format->modifier != NULL)
-		format->modifier = "hh";
-		//else
+		if (is_modifier(&str[*i]) == 1 && is_modifier(format->modifier) <= 1)
+		{
+			format->modifier = "hh";
+			(*i)++;
+		}
+		else if (str[*i] == 'h' && is_modifier(format->modifier) <= 2)
+			format->modifier = "h";
+		else if (str[*i] == 'l' && str[*i + 1] == 'l')
+		{
+			format->modifier = "ll";
+			(*i)++;
+		}
+		else if (str[*i] == 'l' && is_modifier(format->modifier) != 5)
+			format->modifier = "l";
+		else if (str[*i] == 'j' && is_modifier(format->modifier) <= 3)
+			format->modifier = "j";
+		else if (str[*i] == 'z')
+			format->modifier = "z";
+		/*else
+			return ;*/
 		(*i)++;
 	}
-	else if (str[*i] == 'h')
-		format->modifier = "h";
-	else if (str[*i] == 'l' && str[*i + 1] == 'l')
-	{
-		format->modifier = "ll";
-		(*i)++;
-	}
-	else if (str[*i] == 'l')
-		format->modifier = "l";
-	else if (str[*i] == 'j')
-		format->modifier = "j";
-	else if (str[*i] == 'z')
-		format->modifier = "z";
-	else
-		return ;
-	(*i)++;
 }
 
 t_format	*format_init()
@@ -158,14 +169,18 @@ int		ft_format(va_list lst, const char *s, int *i)
 	t_format *format;
 	int	length;
 	char *str;
-	int b;
 
 	str = (char *)s;
 	length = 0;
 	format = format_init();
+	/*ft_flags(format, str, i);
+	ft_putstr("here");
+	ft_putchar(str[*i]);
+	ft_wp(format, lst, str, i);
+	ft_putchar(str[*i]);
+	ft_putchar('\n');*/
 	while (str[*i] != '\0')
 	{
-		b = *i;
 		ft_flags(format, str, i);
 		ft_wp(format, lst, str, i);
 		ft_wp(format, lst, str, i);
@@ -175,8 +190,6 @@ int		ft_format(va_list lst, const char *s, int *i)
 			(*i)++;
 			break ;
 		}
-		if (*i == b)
-			(*i)++;
 	}
 	free_format(format);
 	//ft_putformat(format);

@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/24 19:26:42 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/28 17:32:47 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ char	*add_width(t_format format, va_list lst, wchar_t *type, int *width) // refl
 		lgt = ft_atoi(format.precision);
 	else if (format.type == 'S' && format.precision != NULL && format.precision[0] != '.' && (char *)type != '\0' && ft_atoi(format.precision) < lgt)
 		lgt = ft_wnstrlen(type, ft_atoi(format.precision));
-	//else if ((format.type == 's' || format.type == 'S') && format.width != NULL && format.precision != NULL && format.precision[0] == '.')
-	/*ft_putwstr(type);*/
 	if (format.width == NULL)
 		return ((char *)type);
 	else if (format.width[0] == '*')
@@ -105,22 +103,11 @@ char	*add_width(t_format format, va_list lst, wchar_t *type, int *width) // refl
 		*width = ft_atoi(format.width) - lgt;
 	else
 		return ((char *)type);
-	//ft_putchar(format.flags);
 	if (no_print(format, (char *)type) == 1)
 		(*width)++;
-	if (format.precision == NULL || format.precision[0] == '.')
+	if (format.precision == NULL || (format.precision[0] == '.' && is_dioux(format.type) != 1))
 		format.flags == '0' ? str = fill_zero(format,(char *)type, *width) : 0;
-	/*ft_putnbr(*width);
-	ft_putchar('\n');*/
 	val_width(format, width);
-	/*format.flags == '0' ? *width = 0 : 0;
-	*width < 0 ? *width = 0 : 0;*/
-	//}
-	/*ft_putchar('\n');
-	ft_putstr("width : ");
-	ft_putnbr(*width);
-	ft_putchar('\n');*/
-	//ft_putendl("here");
 	if (str != NULL && format.type != 'c' && format.type != 's' && format.type != 'S')
 		return (str);
 	i = 0;
@@ -128,7 +115,6 @@ char	*add_width(t_format format, va_list lst, wchar_t *type, int *width) // refl
 		c = '0';
 	else
 		c = ' ';
-	//ft_putnbr(*width);
 	while (i < *width && *width > 0)
 	{
 		ft_putchar(c);
@@ -207,21 +193,13 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	char *tmp;
 	int width;
 	int b;
-	int b_f;
 
 	word = NULL;
 	width = 0;
-	b_f = 0;
 	if (format.type == 'x' || format.type == 'p')
-	{
 		word = ft_lltoah(nbr, 1);
-		b_f = 1;
-	}
 	else if (format.type == 'X')
-	{
-		//ft_putendl("here");
 		word = ft_lltoah(nbr, 2);
-	}
 	else if (format.type == 'o' || format.type == 'O')
 		word = ft_lltoao(nbr);
 	else if (format.type == 'u' || format.type == 'U')
@@ -236,7 +214,6 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 		if (tmp != NULL && is_dioux(format.type) > 0)
 			free(tmp);
 		b = 0;
-		b_f = 1;
 	}
 	word = add_precision(format, lst, word, &width);
 	if (format.type == 'p' && ft_strcmp(word, "0x") != 0)
@@ -245,7 +222,6 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 		word = ft_strjoin("0x", tmp);
 		if (tmp != NULL)
 			free(tmp);
-		b_f = 1;
 	}
 	width = 0;
 	word = add_prenbr(format, word);
@@ -259,14 +235,8 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	if (b == 1 && width == 0)
 		width = -1;
 	word == NULL ? width = 0 : 0;
-	/*if (format.flags == '0' && width > 0 && word != NULL && (is_dioux(format.type) > 0 || format.type == 'p'))
+	word != NULL ? free(word) : 0;
+	/*if (word != NULL)
 		free(word);*/
-	/*if (word != NULL && b_f == 1 && ft_strcmp(word, "0") == 1)
-		free(word);*/
-	if (word != NULL /*&& is_dioux(format.type) > 0 && ft_strcmp(word, "0") != 0*/)
-		free(word);
-	/*else if (b_f == 1)
-		free(word);*/
-	//free(word);
 	return (width);
 }

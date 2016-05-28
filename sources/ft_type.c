@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/24 19:46:42 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/28 17:10:34 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,8 +197,9 @@ int		ft_type(t_format *format, va_list lst, char str)
 		format->type = str;
 		length = ft_sc(*format, lst, str);
 	}
-	else if (is_dioux(str) == 0 && is_str(str) == 0 && str != 'p' && str != 'b' && is_flags(str) == 0 && ft_isprint(str) == 1)
+	else if (is_dioux(str) == 0 && is_str(str) == 0 && str != 'p' && str != 'b' && is_flags(str) == 0 && ft_isprint(str) == 1 && (str > '9' || str < '0') && str != '.')
 	{
+		
 		format->type = 's';
 		format->flags != '-' ? add_width(*format, lst, L"s", &length) : 0;
 		ft_putchar(str); //affiche le type ?
