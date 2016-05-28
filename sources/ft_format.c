@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/28 17:15:05 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/28 18:56:12 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	ft_flags(t_format *format, char *str, int *i)
 	{
 		if (str[*i] == '+')
 			format->sign = '+';
-		else if (str[*i] == ' ' && (/*format->sign == '\0' ||*/ format->sign != '+'))
+		else if (str[*i] == ' ' && format->sign != '+')
 			format->sign = ' ';
 		else if (str[*i] == '-')
 			format->flags = '-';
-		else if (str[*i] == '0' && format->flags != '-'/* && format->precision == NULL*/)
+		else if (str[*i] == '0' && format->flags != '-')
 			format->flags = '0';
 		else if (str[*i] == '#')
 			format->pre = '#';
@@ -31,17 +31,14 @@ void	ft_flags(t_format *format, char *str, int *i)
 	}
 }
 
-void	ft_wp(t_format *format, va_list lst, char *str, int *i) //ajout condition '.' pour precis
+void	ft_wp(t_format *format, va_list lst, char *str, int *i)
 {
 	int j;
 	int lgt;
 	int b;
 	char *tmp;
 
-	/*if (format->flags == '0' && str[*i] == '.')
-		format->flags = '\0';*/
 	str[*i] == '.' ? b = 1 : (b = 0);
-	/*str[*i] == '.' ? (*i)++ : 0;*/
 	while (str[*i] == '.')
 		(*i)++;
 	if (str[*i] >= '0' && str[*i] <= '9')
@@ -59,9 +56,17 @@ void	ft_wp(t_format *format, va_list lst, char *str, int *i) //ajout condition '
 	}
 	else if (str[*i] == '*')
 	{
-		tmp = "*";
-		/*format->precision = ft_itoa(va_arg(lst, int));
-		(*i)++;*/
+		//tmp = "*";
+		(*i)++;
+		j = va_arg(lst, int);
+		if (j < 0)
+		{
+			if (b == 1)
+				return ;
+			j = j * (-1);
+			format->flags = '-';
+		}
+		tmp = ft_itoa(j);
 	}
 	else
 	{
@@ -110,8 +115,6 @@ void		ft_modifier(t_format *format, char *str, int *i)
 			format->modifier = "j";
 		else if (str[*i] == 'z')
 			format->modifier = "z";
-		/*else
-			return ;*/
 		(*i)++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/28 17:32:47 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/28 18:06:34 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ char	*add_width(t_format format, va_list lst, wchar_t *type, int *width) // refl
 		lgt = ft_wnstrlen(type, ft_atoi(format.precision));
 	if (format.width == NULL)
 		return ((char *)type);
-	else if (format.width[0] == '*')
-		*width = va_arg(lst, int) - lgt;
+	/*else if (format.width[0] == '*')
+		*width = va_arg(lst, int) - lgt;*/
 	else if (format.width[0] >= '0' && format.width[0] <= '9')
 		*width = ft_atoi(format.width) - lgt;
 	else
