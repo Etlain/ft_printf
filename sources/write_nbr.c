@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/28 18:06:34 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/28 19:18:32 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,16 +196,19 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 
 	word = NULL;
 	width = 0;
-	if (format.type == 'x' || format.type == 'p')
+
+	if (format.type == 'd' || format.type == 'D' || format.type == 'i')
+		word = ft_lltoa(nbr);
+	else if (format.type == 'u' || format.type == 'U')
+		word = ft_ulltoa((unsigned long long)nbr);
+	else if (format.type == 'x' || format.type == 'p')
 		word = ft_lltoah(nbr, 1);
 	else if (format.type == 'X')
 		word = ft_lltoah(nbr, 2);
 	else if (format.type == 'o' || format.type == 'O')
 		word = ft_lltoao(nbr);
-	else if (format.type == 'u' || format.type == 'U')
-		word = ft_ulltoa((unsigned long long)nbr);
-	else
-		word = ft_lltoa(nbr);
+	else if (format.type == 'b')
+		word = ft_itoab((unsigned int)nbr);
 	b = no_print(format, word);
 	if (format.type == 'p' && ft_strcmp(word, "0") == 0 && b == 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/28 17:10:34 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/28 19:27:52 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,9 @@ int		ft_dioux(t_format format, va_list lst, char str) // ajout p
 		length = write_nbr(format, lst, (long long)va_arg(lst, int));
 	else if (str == 'D')
 		length = write_nbr(format, lst, (long long)va_arg(lst, long int));
-	else if (str == 'o')
+	else if (str == 'u' || str == 'x' || str == 'X' || str == 'o' || str == 'b')
 		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
-	else if (str == 'O')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
-	else if (str == 'u')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
-	else if (str == 'U')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
-	else if (str == 'x')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
-	else if (str == 'X')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
-	else if (str == 'p')
+	else if (str == 'U' || str == 'O' || str == 'p')
 		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
 	else
 		return (-1);
@@ -163,7 +153,7 @@ int		ft_type(t_format *format, va_list lst, char str)
 
 	length = 0;
 	//format->type = str;
-	if (is_dioux(str) > 0 || str == 'p')
+	if (is_dioux(str) > 0 || str == 'p' || str == 'b')
 	{
 		format->type = str;
 		if (format->modifier != NULL && is_dioux(str) == 1)
@@ -171,15 +161,15 @@ int		ft_type(t_format *format, va_list lst, char str)
 		else
 			length = ft_dioux(*format, lst, str);
 	}
-	else if (str == 'b')				// bonus pas integrer float et double fonction
+	/*else if (str == 'b')				// bonus pas integrer float et double fonction
 	{
 		ft_putstr(ft_itoab(va_arg(lst, unsigned int)));
-		/*s = NULL;
+		//s = NULL;
 		s = ft_itoab(va_arg(lst, unsigned int));
 		ft_putstr(s);
 		if (s != NULL && ft_strcmp(s, "0") != 0)
-			free(s);*/
-	}
+			free(s);
+	}*/
 	else if (str == '%')
 	{
 		format->type = 's';
