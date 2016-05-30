@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/30 02:00:38 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/30 18:30:59 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,30 @@
 #include <stdio.h>
 int	ft_getcolor(char *s, int b)
 {
-	if (b == 0)
-		ft_putstr("\033[0m");
-	else if (ft_strcmp("cyan", s) == 0)
-		ft_putstr("\033[36m");
+	int color;
+
+	color = 0;
+	if (ft_strcmp("cyan", s) == 0)
+		color = 36;
 	else if (ft_strcmp("magenta", s) == 0)
-		ft_putstr("\033[35m");
+		color = 35;
 	else if (ft_strcmp("blue", s) == 0)
-		ft_putstr("\033[34m");
+		color = 34;
 	else if (ft_strcmp("yellow", s) == 0)
-		ft_putstr("\033[33m");
+		color = 33;
 	else if (ft_strcmp("green", s) == 0)
-		ft_putstr("\033[32m");
+		color = 32;
 	else if (ft_strcmp("red", s) == 0)
-		ft_putstr("\033[31m");
+		color = 31;
 	else if (ft_strcmp("black", s) == 0)
-		ft_putstr("\033[30m");
+		color = 30;
 	else
 		return (0);
+	if (b == 0)
+		color = 0;
+	ft_putstr("\033[");
+	ft_putnbr(color);
+	ft_putchar('m');
 	return (1);
 }
 
@@ -76,11 +82,16 @@ int		ft_printf(const char *str, ...)
 	length = 0;
 	while (str[i] != '\0')
 	{
-		/*if (str[i] == '{')
+		if (str[i] == '{')
 		{
 			i++;
-			i = ft_color((char *)str, i);
-		}*/
+			if (str[i] != '\0')
+				i = ft_color((char *)str, i);
+			if (str[i] == '\0')
+				break ;
+			//else
+			//	i--;
+		}
 		if (str[i] == '%')
 		{
 			i++;
