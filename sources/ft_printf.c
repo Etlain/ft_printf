@@ -6,14 +6,14 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/28 20:22:12 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/30 02:00:38 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
 #include <stdio.h>
-void	ft_getcolor(char *s, int b)
+int	ft_getcolor(char *s, int b)
 {
 	if (b == 0)
 		ft_putstr("\033[0m");
@@ -31,6 +31,9 @@ void	ft_getcolor(char *s, int b)
 		ft_putstr("\033[31m");
 	else if (ft_strcmp("black", s) == 0)
 		ft_putstr("\033[30m");
+	else
+		return (0);
+	return (1);
 }
 
 int	ft_color(char *str, int i)
@@ -49,7 +52,12 @@ int	ft_color(char *str, int i)
 	s = (char *)malloc(j + 1);
 	s[j + 1] = '\0';
 	ft_strncat(s, &str[i], j - i);
-	ft_getcolor(s, b);
+	if (ft_getcolor(s, b) == 0)
+	{
+		free(s);
+		i--;
+		return (i);
+	}
 	free(s);
 	j++;
 	return (j);
@@ -68,17 +76,17 @@ int		ft_printf(const char *str, ...)
 	length = 0;
 	while (str[i] != '\0')
 	{
+		/*if (str[i] == '{')
+		{
+			i++;
+			i = ft_color((char *)str, i);
+		}*/
 		if (str[i] == '%')
 		{
 			i++;
 			format = ft_format(lst, (char *)str, &i);
 			format < 0 ? (format = 0) : 0;
 			length = length + format;
-		}
-		else if (str[i] == '{')
-		{
-			i++;
-			i = ft_color((char *)str, i);
 		}
 		else
 		{
