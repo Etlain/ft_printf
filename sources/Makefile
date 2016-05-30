@@ -10,14 +10,14 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRC =   ft_printf.c ft_format.c ft_type.c write_nbr.c ft_is.c
+SRC =   ft_printf.c ft_format.c ft_type.c write_nbr.c ft_is.c ft_wp.c
 
 OBJ = $(SRC:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror
 
 all:
-	gcc -c $(SRC)
+	gcc -c $(FLAGS) $(SRC)
 
 clean:
 	rm -rf $(OBJ)

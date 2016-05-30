@@ -6,13 +6,12 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/30 18:30:59 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/30 20:52:31 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-#include <stdio.h>
 int	ft_getcolor(char *s, int b)
 {
 	int color;
@@ -69,36 +68,46 @@ int	ft_color(char *str, int i)
 	return (j);
 }
 
+int		ft_change_color(char *str, int i)
+{
+	if (str[i] == '{')
+	{
+		i++;
+		if (str[i] != '\0')
+			i = ft_color((char *)str, i);
+		if (str[i] == '\0')
+			return (-1);
+	}
+	return (i);
+}
+
+int		put_format(va_list lst, char *str, int *i, int length)
+{
+	int format;
+
+	format = 0;
+	(*i)++;
+	format = ft_format(lst, str, i);
+	format < 0 ? (format = 0) : 0;
+	length = length + format;
+	return (length);
+}
+
 int		ft_printf(const char *str, ...)
 {
 	va_list lst;
 	int i;
 	int length;
-	int format;
 
 	va_start(lst, str);
 	i = 0;
-	format = 0;
 	length = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '{')
-		{
-			i++;
-			if (str[i] != '\0')
-				i = ft_color((char *)str, i);
-			if (str[i] == '\0')
+		if ((i = ft_change_color((char *)str, i)) < 0)
 				break ;
-			//else
-			//	i--;
-		}
 		if (str[i] == '%')
-		{
-			i++;
-			format = ft_format(lst, (char *)str, &i);
-			format < 0 ? (format = 0) : 0;
-			length = length + format;
-		}
+			length = put_format(lst, (char *)str, &i, length);
 		else
 		{
 			ft_putchar(str[i]);

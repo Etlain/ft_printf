@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/28 19:18:32 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/30 21:02:23 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int		no_print(t_format format, char *word)
 char	*fill_zero(t_format format, char *type, int width)
 {
 	char	*str;
-	char	*str2;
 	int	i;
 	int 	j;
 
@@ -79,7 +78,7 @@ void	val_width(t_format format , int *width)
 		*width = *width - 1;*/
 }
 
-char	*add_width(t_format format, va_list lst, wchar_t *type, int *width) // reflechir pour wchat_t // penser condition -
+char	*add_width(t_format format, wchar_t *type, int *width) // reflechir pour wchat_t // penser condition -
 {
 	int i;
 	int lgt;
@@ -123,9 +122,8 @@ char	*add_width(t_format format, va_list lst, wchar_t *type, int *width) // refl
 	return ((char *)type);
 }
 
-static char	*add_precision(t_format format, va_list lst, char *type, int *prcsn) // reflechir pour wchat_t // penser condition -
+static char	*add_precision(t_format format, char *type, int *prcsn) // reflechir pour wchat_t // penser condition -
 {
-	int i;
 	char *str;
 
 	str = NULL;
@@ -187,7 +185,7 @@ char	*ft_strjoinfree(char *s1, char *s2)
 	return (str);
 }*/
 
-int		write_nbr(t_format format, va_list lst, long long nbr)
+int		write_nbr(t_format format, long long nbr)
 {
 	char *word;
 	char *tmp;
@@ -218,7 +216,7 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 			free(tmp);
 		b = 0;
 	}
-	word = add_precision(format, lst, word, &width);
+	word = add_precision(format, word, &width);
 	if (format.type == 'p' && ft_strcmp(word, "0x") != 0)
 	{
 		tmp = word;
@@ -229,17 +227,15 @@ int		write_nbr(t_format format, va_list lst, long long nbr)
 	width = 0;
 	word = add_prenbr(format, word);
 	if (format.flags != '-')
-		word = add_width(format, lst, (wchar_t *)word, &width);
+		word = add_width(format, (wchar_t *)word, &width);
 	if (b == 0)
 		ft_putstr(word);
 	if (format.flags == '-')
-		add_width(format, lst, (wchar_t *)word, &width);
+		add_width(format, (wchar_t *)word, &width);
 	b == 0 ? (width = width + ft_strlen(word)) : 0;
 	if (b == 1 && width == 0)
 		width = -1;
 	word == NULL ? width = 0 : 0;
 	word != NULL ? free(word) : 0;
-	/*if (word != NULL)
-		free(word);*/
 	return (width);
 }

@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/28 19:27:52 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/05/30 21:12:47 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ int		add_umodifier(t_format format, va_list lst)
 	if (format.modifier == NULL)
 		return (0);
 	if (ft_strcmp(format.modifier, "hh") == 0)
-		length = write_nbr(format, lst, (long long)(unsigned char)va_arg(lst, int));
+		length = write_nbr(format, (long long)(unsigned char)va_arg(lst, int));
 	else if (format.modifier[0] == 'h')
-		length = write_nbr(format, lst, (long long)(unsigned short)va_arg(lst, int));
+		length = write_nbr(format, (long long)(unsigned short)va_arg(lst, int));
 	else if (format.modifier[0] == 'l')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
+		length = write_nbr(format, (long long)va_arg(lst, unsigned long));
 	else if (ft_strcmp(format.modifier, "ll") == 0)
-		length = write_nbr(format, lst, va_arg(lst, unsigned long long));
+		length = write_nbr(format, va_arg(lst, unsigned long long));
 	else if (format.modifier[0] == 'j')
-		length = write_nbr(format, lst, (long long)va_arg(lst, uintmax_t));
+		length = write_nbr(format, (long long)va_arg(lst, uintmax_t));
 	else if (format.modifier[0] == 'z')
-		length = write_nbr(format, lst, (long long)va_arg(lst, size_t));
+		length = write_nbr(format, (long long)va_arg(lst, size_t));
 	return (length);
 }
 
@@ -45,17 +45,17 @@ int		add_modifier(t_format format, va_list lst)
 	if (format.type == 'u' || format.type == 'o' || format.type == 'x' || format.type == 'X')
 		length = add_umodifier(format, lst);
 	else if (ft_strcmp(format.modifier, "hh") == 0)
-		length = write_nbr(format, lst, (long long)(char)va_arg(lst, int));
+		length = write_nbr(format, (long long)(char)va_arg(lst, int));
 	else if (format.modifier[0] == 'h')
-		length = write_nbr(format, lst, (long long)(short)va_arg(lst, int));
+		length = write_nbr(format, (long long)(short)va_arg(lst, int));
 	else if (format.modifier[0] == 'l')
-		length = write_nbr(format, lst, (long long)va_arg(lst, long));
+		length = write_nbr(format, (long long)va_arg(lst, long));
 	else if (ft_strcmp(format.modifier, "ll") == 0)
-		length = write_nbr(format, lst, va_arg(lst, long long));
+		length = write_nbr(format, va_arg(lst, long long));
 	else if (format.modifier[0] == 'j')
-		length = write_nbr(format, lst, (long long)va_arg(lst, intmax_t));
+		length = write_nbr(format, (long long)va_arg(lst, intmax_t));
 	else if (format.modifier[0] == 'z')
-		length = write_nbr(format, lst, (long long)va_arg(lst, size_t));
+		length = write_nbr(format, (long long)va_arg(lst, size_t));
 	return (length);
 }
 
@@ -65,13 +65,13 @@ int		ft_dioux(t_format format, va_list lst, char str) // ajout p
 
 	length = 0;
 	if (str == 'd' || str == 'i')
-		length = write_nbr(format, lst, (long long)va_arg(lst, int));
+		length = write_nbr(format, (long long)va_arg(lst, int));
 	else if (str == 'D')
-		length = write_nbr(format, lst, (long long)va_arg(lst, long int));
+		length = write_nbr(format, (long long)va_arg(lst, long int));
 	else if (str == 'u' || str == 'x' || str == 'X' || str == 'o' || str == 'b')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned int));
+		length = write_nbr(format, (long long)va_arg(lst, unsigned int));
 	else if (str == 'U' || str == 'O' || str == 'p')
-		length = write_nbr(format, lst, (long long)va_arg(lst, unsigned long));
+		length = write_nbr(format, (long long)va_arg(lst, unsigned long));
 	else
 		return (-1);
 	return (length);
@@ -97,10 +97,10 @@ int	ft_sc(t_format format, va_list lst, char str)
 		word = (wchar_t *)va_arg(lst, char *);
 	if (str == 'c' || str == 'C')
 	{
-		format.flags != '-' ? add_width(format, lst, L"1", &width) : 0;
+		format.flags != '-' ? add_width(format, L"1", &width) : 0;
 		str == 'c' ? ft_putchar((char)va_arg(lst, int)) : 0;
 		str == 'C' ? ft_putwchar((c = va_arg(lst, wchar_t))) : 0;
-		format.flags == '-' ? add_width(format, lst, L"1", &width) : 0;
+		format.flags == '-' ? add_width(format, L"1", &width) : 0;
 		if (str == 'C')
 			width = ft_sizewchar((long)c);
 		else
@@ -118,7 +118,7 @@ int	ft_sc(t_format format, va_list lst, char str)
 	}
 	if (word != NULL)
 	{
-		format.flags != '-' ? add_width(format, lst, word, &width) : 0;
+		format.flags != '-' ? add_width(format, word, &width) : 0;
 		if (format.precision != NULL)
 		{
 			if (str == 's' && format.precision[0] != '.')
@@ -130,9 +130,9 @@ int	ft_sc(t_format format, va_list lst, char str)
 			ft_putstr((char *)word);
 		else
 			ft_putwstr(word);
-		format.flags == '-' ? add_width(format, lst, word, &width) : 0;
+		format.flags == '-' ? add_width(format, word, &width) : 0;
 	}
-	if (format.precision != NULL && format.precision[0] != '.' && (str == 's' || str == 'S') && ft_atoi(format.precision) < ft_strlen((char *)word))
+	if (format.precision != NULL && format.precision[0] != '.' && (str == 's' || str == 'S') && ft_atoi(format.precision) < (int)ft_strlen((char *)word))
 		width = ft_atoi(format.precision) + width;
 	else if (word != NULL && str == 's')
 		width = ft_strlen((char *)word) + width;
@@ -148,7 +148,6 @@ int	ft_sc(t_format format, va_list lst, char str)
 
 int		ft_type(t_format *format, va_list lst, char str)
 {
-	char *s;
 	int length;
 
 	length = 0;
@@ -161,25 +160,16 @@ int		ft_type(t_format *format, va_list lst, char str)
 		else
 			length = ft_dioux(*format, lst, str);
 	}
-	/*else if (str == 'b')				// bonus pas integrer float et double fonction
-	{
-		ft_putstr(ft_itoab(va_arg(lst, unsigned int)));
-		//s = NULL;
-		s = ft_itoab(va_arg(lst, unsigned int));
-		ft_putstr(s);
-		if (s != NULL && ft_strcmp(s, "0") != 0)
-			free(s);
-	}*/
 	else if (str == '%')
 	{
 		format->type = 's';
 		// repetion de ce bout de code dans write nbr
 		length = 0;
 		if (format->flags != '-')
-			add_width(*format, lst, L"%", &length);
+			add_width(*format, L"%", &length);
 		ft_putchar(str);
 		if (format->flags == '-')
-			add_width(*format, lst, L"%", &length);
+			add_width(*format, L"%", &length);
 		return (1 + length);
 	}
 	else if (str == 'c' || str == 'C' || str == 's' || str == 'S')
@@ -191,9 +181,9 @@ int		ft_type(t_format *format, va_list lst, char str)
 	{
 		
 		format->type = 's';
-		format->flags != '-' ? add_width(*format, lst, L"s", &length) : 0;
+		format->flags != '-' ? add_width(*format, L"s", &length) : 0;
 		ft_putchar(str); //affiche le type ?
-		format->flags == '-' ? add_width(*format, lst, L"s", &length) : 0;
+		format->flags == '-' ? add_width(*format, L"s", &length) : 0;
 		length++;
 	}
 	return (length);
