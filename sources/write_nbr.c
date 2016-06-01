@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/30 21:02:23 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/01 14:39:34 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,9 @@ char	*fill_zero(t_format format, char *type, int width)
 
 void	val_width(t_format format , int *width)
 {
-	//format.flags == '0' ? *width = 0 : 0;
 	if (format.flags == '0' && format.precision == NULL && format.type != 'c' && format.type != 'S' && format.type != 's')
 		*width = 0;
 	*width < 0 ? *width = 0 : 0;
-	/*if (format.pre == '#' && (format.type == 'x' || format.type == 'X'))
-		*width = *width - 2;
-	if (format.pre == '#' && (format.type == 'o' || format.type == 'O'))
-		*width = *width - 1;*/
 }
 
 char	*add_width(t_format format, wchar_t *type, int *width) // reflechir pour wchat_t // penser condition -
@@ -96,8 +91,6 @@ char	*add_width(t_format format, wchar_t *type, int *width) // reflechir pour wc
 		lgt = ft_wnstrlen(type, ft_atoi(format.precision));
 	if (format.width == NULL)
 		return ((char *)type);
-	/*else if (format.width[0] == '*')
-		*width = va_arg(lst, int) - lgt;*/
 	else if (format.width[0] >= '0' && format.width[0] <= '9')
 		*width = ft_atoi(format.width) - lgt;
 	else
@@ -122,23 +115,19 @@ char	*add_width(t_format format, wchar_t *type, int *width) // reflechir pour wc
 	return ((char *)type);
 }
 
-static char	*add_precision(t_format format, char *type, int *prcsn) // reflechir pour wchat_t // penser condition -
+static char	*add_precision(t_format format, char *type, int *prcsn)
 {
 	char *str;
 
 	str = NULL;
 	if (format.precision == NULL)
 		return (type);
-/*	else if (format.precision[0] == '*')
-		*prcsn = va_arg(lst, int) - ft_strlen(type);*/
 	else if (format.precision[0] >= '0' && format.precision[0] <= '9')
 		*prcsn = ft_atoi(format.precision) - ft_strlen(type);
 	else
 		return (type);
 	if (type != NULL && (type[0] == '-' || type[0] == '+'))
 		(*prcsn)++;
-	/*ft_putnbr(*prcsn);
-	ft_putendl("here");*/
 	str = fill_zero(format, type, *prcsn);
 	if (str != NULL)
 		return (str);
@@ -173,17 +162,6 @@ static char	*add_prenbr(t_format format, char *nbr)
 	}
 	return (nbr);
 }
-/*
-char	*ft_strjoinfree(char *s1, char *s2)
-{
-	char *str;
-
-	
-	str = s2;
-	str = ft_strjoin(s1, s2);
-	//free(s2);
-	return (str);
-}*/
 
 int		write_nbr(t_format format, long long nbr)
 {
@@ -194,7 +172,7 @@ int		write_nbr(t_format format, long long nbr)
 
 	word = NULL;
 	width = 0;
-
+	b = 0;
 	if (format.type == 'd' || format.type == 'D' || format.type == 'i')
 		word = ft_lltoa(nbr);
 	else if (format.type == 'u' || format.type == 'U')
@@ -228,10 +206,8 @@ int		write_nbr(t_format format, long long nbr)
 	word = add_prenbr(format, word);
 	if (format.flags != '-')
 		word = add_width(format, (wchar_t *)word, &width);
-	if (b == 0)
-		ft_putstr(word);
-	if (format.flags == '-')
-		add_width(format, (wchar_t *)word, &width);
+	b == 0 ? ft_putstr(word) : 0;
+	format.flags == '-' ? add_width(format, (wchar_t *)word, &width) : 0;
 	b == 0 ? (width = width + ft_strlen(word)) : 0;
 	if (b == 1 && width == 0)
 		width = -1;
