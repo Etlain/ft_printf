@@ -6,114 +6,11 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/01 14:39:34 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/01 19:09:52 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
-
-int		no_print(t_format format, char *word)
-{
-	if (format.precision == NULL)
-		return (0);
-	if (format.precision[0] == '0' || format.precision[0] == '.')
-	{
-		if (format.pre == '#' && (format.type == 'o' || format.type == 'O'))
-			return (0);
-		if (ft_strcmp(word, "0") == 0)
-			return (1);
-	}
-	return (0);
-}
-
-char	*fill_zero(t_format format, char *type, int width)
-{
-	char	*str;
-	int	i;
-	int 	j;
-
-	if (type == NULL || width <= 0)
-		return (NULL);
-	if (is_dioux(format.type) == 0 && format.type != 'p')
-		return (NULL);
-	i = 0;
-	j = 0;
-	str = (char *)ft_memalloc(ft_strlen(type) + width);
-	if (type[j] == '-' || type[j] == '+' || type[j] == ' ')
-	{
-		str[i] = type[j];
-		i++;
-		width++;
-		j++;
-	}
-	else if (type[j] == '0' && (type[j + 1] == 'x' || type[j + 1] == 'X'))
-	{
-		type[j + 1] == 'x' ? ft_strcat(str, "0x") : 0;
-		type[j + 1] == 'X' ? ft_strcat(str, "0X") : 0;
-		j = 2;
-		i = 2;
-		width = width + 2;
-	}
-	while (i < width)
-	{
-		ft_strcat(str, "0");
-		i++;
-	}
-	ft_strcat(str, &type[j]);
-	if (type != NULL && is_dioux(format.type) > 0 && ft_strcmp(type, "0") != 0)
-		free(type);
-	return (str);
-}
-
-void	val_width(t_format format , int *width)
-{
-	if (format.flags == '0' && format.precision == NULL && format.type != 'c' && format.type != 'S' && format.type != 's')
-		*width = 0;
-	*width < 0 ? *width = 0 : 0;
-}
-
-char	*add_width(t_format format, wchar_t *type, int *width) // reflechir pour wchat_t // penser condition -
-{
-	int i;
-	int lgt;
-	char *str;
-	char c;
-
-	str = NULL;
-	if (format.type == 'S')
-		lgt = ft_wstrlen(type);
-	else
-		lgt = ft_strlen((char *)type);
-	if (format.type == 's' && format.precision != NULL && format.precision[0] != '.' && (char *)type != '\0' && ft_atoi(format.precision) < lgt)
-		lgt = ft_atoi(format.precision);
-	else if (format.type == 'S' && format.precision != NULL && format.precision[0] != '.' && (char *)type != '\0' && ft_atoi(format.precision) < lgt)
-		lgt = ft_wnstrlen(type, ft_atoi(format.precision));
-	if (format.width == NULL)
-		return ((char *)type);
-	else if (format.width[0] >= '0' && format.width[0] <= '9')
-		*width = ft_atoi(format.width) - lgt;
-	else
-		return ((char *)type);
-	if (no_print(format, (char *)type) == 1)
-		(*width)++;
-	if (format.precision == NULL || (format.precision[0] == '.' && is_dioux(format.type) != 1))
-		format.flags == '0' ? str = fill_zero(format,(char *)type, *width) : 0;
-	val_width(format, width);
-	if (str != NULL && format.type != 'c' && format.type != 's' && format.type != 'S')
-		return (str);
-	i = 0;
-	if ((format.type == 'c' || format.type == 's' || format.type == 'S') && format.flags == '0')
-		c = '0';
-	else
-		c = ' ';
-	while (i < *width && *width > 0)
-	{
-		ft_putchar(c);
-		i++;
-	}
-	return ((char *)type);
-}
 
 static char	*add_precision(t_format format, char *type, int *prcsn)
 {
@@ -163,45 +60,61 @@ static char	*add_prenbr(t_format format, char *nbr)
 	return (nbr);
 }
 
-int		write_nbr(t_format format, long long nbr)
+static char	*fill_word(char type, long long nbr)
 {
 	char *word;
-	char *tmp;
-	int width;
-	int b;
 
 	word = NULL;
-	width = 0;
-	b = 0;
-	if (format.type == 'd' || format.type == 'D' || format.type == 'i')
+	if (type == 'd' || type == 'D' || type == 'i')
 		word = ft_lltoa(nbr);
-	else if (format.type == 'u' || format.type == 'U')
+	else if (type == 'u' || type == 'U')
 		word = ft_ulltoa((unsigned long long)nbr);
-	else if (format.type == 'x' || format.type == 'p')
+	else if (type == 'x' || type == 'p')
 		word = ft_lltoah(nbr, 1);
-	else if (format.type == 'X')
+	else if (type == 'X')
 		word = ft_lltoah(nbr, 2);
-	else if (format.type == 'o' || format.type == 'O')
+	else if (type == 'o' || type == 'O')
 		word = ft_lltoao(nbr);
-	else if (format.type == 'b')
+	else if (type == 'b')
 		word = ft_itoab((unsigned int)nbr);
-	b = no_print(format, word);
-	if (format.type == 'p' && ft_strcmp(word, "0") == 0 && b == 1)
+	return (word);
+}
+
+static char	*p_precision(t_format format, char *word, int *width, int *b)
+{
+	char *tmp;
+
+	if (format.type == 'p' && ft_strcmp(word, "0") == 0 && *b == 1)
 	{
 		tmp = word;
 		word = ft_strjoin(tmp, "x");
-		if (tmp != NULL && is_dioux(format.type) > 0)
-			free(tmp);
-		b = 0;
+		tmp != NULL ? free(tmp) : 0;
+		*b = 0;
 	}
-	word = add_precision(format, word, &width);
+	word = add_precision(format, word, width);
 	if (format.type == 'p' && ft_strcmp(word, "0x") != 0)
 	{
 		tmp = word;
 		word = ft_strjoin("0x", tmp);
-		if (tmp != NULL)
-			free(tmp);
+		tmp != NULL ? free(tmp) : 0;
 	}
+	return (word);
+}
+
+int			write_nbr(t_format format, long long nbr)
+{
+	char	*word;
+	int		width;
+	int		b;
+
+	width = 0;
+	b = 0;
+	word = fill_word(format.type, nbr);
+	b = no_print(format, word);
+	if (format.type == 'p')
+		word = p_precision(format, word, &width, &b);
+	else
+		word = add_precision(format, word, &width);
 	width = 0;
 	word = add_prenbr(format, word);
 	if (format.flags != '-')

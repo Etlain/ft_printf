@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_wnstrlen.c                                      :+:      :+:    :+:   */
+/*   no_print.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 16:56:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/01 19:19:02 by mmouhssi         ###   ########.fr       */
+/*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
+/*   Updated: 2016/06/01 18:49:36 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/ft_printf.h"
 
-int	ft_wnstrlen(wchar_t *str, int lgt)
+int		no_print(t_format format, char *word)
 {
-	int len;
-	int i;
-	int tmp;
-
-	i = 0;
-	len = 0;
-	tmp = 0;
-	while (str[i] != '\0')
+	if (format.precision == NULL)
+		return (0);
+	if (format.precision[0] == '0' || format.precision[0] == '.')
 	{
-		tmp = len;
-		len = tmp + ft_sizewchar((long)str[i]);
-		if (len > lgt)
-			break ;
-		i++;
+		if (format.pre == '#' && (format.type == 'o' || format.type == 'O'))
+			return (0);
+		if (ft_strcmp(word, "0") == 0)
+			return (1);
 	}
-	return (tmp);
+	return (0);
 }

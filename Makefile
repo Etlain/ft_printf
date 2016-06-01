@@ -32,7 +32,8 @@ LIB =   ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c          \
 
 PATH_LIB = libft/
 
-SRC = ft_printf.c ft_format.c ft_type.c write_nbr.c ft_is.c ft_wp.c
+SRC = ft_printf.c ft_format.c ft_type.c write_nbr.c ft_is.c ft_wp.c      \
+	  ft_sc.c fill_zero.c add_width.c no_print.c change_color.c
 
 PATH_SRC = sources/
 

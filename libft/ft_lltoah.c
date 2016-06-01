@@ -6,13 +6,12 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 23:05:39 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/24 19:14:35 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/01 19:25:28 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-//#include <stdio.h>
 static unsigned long long	ft_less(unsigned long long nbr, int *i, int *h)
 {
 	unsigned long long	s;

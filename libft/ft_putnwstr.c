@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 16:03:28 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/14 18:16:42 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/01 19:21:32 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	ft_nbroctet(wchar_t c)
 	return (-1);
 }
 
-void	ft_putnwstr(wchar_t *str, int lgt)
+void		ft_putnwstr(wchar_t *str, int lgt)
 {
 	int i;
 

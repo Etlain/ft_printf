@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/30 21:22:56 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/01 19:08:15 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ static char		*ft_star(t_format *format, va_list lst, int *i, int b)
 
 void			ft_wp(t_format *format, va_list lst, char *str, int *i)
 {
-	int b;
-	char *tmp;
+	char	*tmp;
+	int		b;
 
 	if (str[*i] == '.')
 		b = 1;

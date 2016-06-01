@@ -6,20 +6,20 @@
 /*   By: mmouhssi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/24 14:57:57 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/30 21:17:20 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/01 18:38:15 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int is_flags(char str)
+int		is_flags(char str)
 {
-	    if (str == '+' || str == ' ' || str == '-' || str == '0' || str == '#')
-			        return (1);
-		    return (0);
+	if (str == '+' || str == ' ' || str == '-' || str == '0' || str == '#')
+		return (1);
+	return (0);
 }
 
-int     is_str(char type)
+int		is_str(char type)
 {
 	if (type == 's' || type == 'S')
 		return (1);
@@ -28,7 +28,7 @@ int     is_str(char type)
 	return (0);
 }
 
-int     is_dioux(char type)
+int		is_dioux(char type)
 {
 	if (type == 'd' || type == 'i' || type == 'o')
 		return (1);
@@ -39,7 +39,7 @@ int     is_dioux(char type)
 	return (0);
 }
 
-int is_unsigned(char str)
+int		is_unsigned(char str)
 {
 	if (str == 'u' || str == 'U' || str == 'x' || str == 'X')
 		return (1);
@@ -48,7 +48,7 @@ int is_unsigned(char str)
 	return (0);
 }
 
-int         is_modifier(char *str)
+int		is_modifier(char *str)
 {
 	if (str == NULL)
 		return (0);

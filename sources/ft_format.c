@@ -6,13 +6,13 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/05/30 21:24:51 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/01 19:02:37 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	ft_flags(t_format *format, char *str, int *i)
+static void			ft_flags(t_format *format, char *str, int *i)
 {
 	while (str[*i] != '\0' && is_flags(str[*i]) == 1)
 	{
@@ -30,10 +30,10 @@ void	ft_flags(t_format *format, char *str, int *i)
 	}
 }
 
-void		ft_modifier(t_format *format, char *str, int *i)
+static void			ft_modifier(t_format *format, char *str, int *i)
 {
 	while (str[*i] != '\0' && is_modifier(&str[*i]) > 0)
-	{	
+	{
 		if (is_modifier(&str[*i]) == 1 && is_modifier(format->modifier) <= 1)
 		{
 			format->modifier = "hh";
@@ -56,7 +56,7 @@ void		ft_modifier(t_format *format, char *str, int *i)
 	}
 }
 
-t_format	*format_init()
+static t_format		*format_init(void)
 {
 	t_format *format;
 
@@ -70,8 +70,8 @@ t_format	*format_init()
 	format->type = '\0';
 	return (format);
 }
-
-void	ft_putformat(t_format *format) // a effacer
+/*
+static void			ft_putformat(t_format *format) // a effacer
 {
 	ft_putchar('\n');
 	ft_putendl("format :");
@@ -94,8 +94,8 @@ void	ft_putformat(t_format *format) // a effacer
 	ft_putchar(format->type);
 	ft_putchar('\n');
 }
-
-void	free_format(t_format *format)
+*/
+static void			free_format(t_format *format)
 {
 	if (format->precision != NULL)
 	{
@@ -110,7 +110,7 @@ void	free_format(t_format *format)
 	free(format);
 }
 
-int		ft_format(va_list lst, const char *s, int *i)
+int					ft_format(va_list lst, const char *s, int *i)
 {
 	t_format	*format;
 	int			length;

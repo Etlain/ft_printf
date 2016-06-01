@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 14:36:13 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/04/03 14:43:43 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/01 19:22:32 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_put_error(char *str)
 {
-	int i;
-	char c;
+	char	c;
+	int		i;
 
 	c = '\n';
 	i = 0;
