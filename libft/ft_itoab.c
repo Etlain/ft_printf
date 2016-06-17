@@ -6,12 +6,12 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/04 22:36:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/01 19:29:50 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/17 18:45:26 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+/*
 static void		ft_fill_str(char *str, unsigned int nbr, unsigned int p, int i)
 {
 	int	max;
@@ -30,10 +30,42 @@ static void		ft_fill_str(char *str, unsigned int nbr, unsigned int p, int i)
 		i--;
 	}
 }
-
+*/
+#include <stdio.h>
 char			*ft_itoab(unsigned int nbr)
 {
-	unsigned int	p;
+	char tab[sizeof(int) * 8];
+	char *bin;
+	int i;
+	int j;
+
+	ft_putendl("here");
+	if (nbr == 0)
+	{
+		bin = (char *)ft_memalloc(2);
+		strcat(bin, "0");
+		return (bin);
+	}
+	i = 0;
+	while (nbr > 0)
+	{
+		tab[i] = '0' + (nbr & 1);
+		nbr = nbr >> 1;
+		i++;
+	}
+	tab[i] = '\0';
+	bin = (char *)ft_memalloc(i + 1);
+	//ft_memcpy(bin, tab, i + 1);
+	j = 0;
+	while (i >= 0)
+	{
+		ft_putendl(bin);
+		bin[j] = tab[i];
+		j++;
+		i--;
+		//j++;
+	}
+	/*unsigned int	p;
 	char			*str;
 	int				i;
 
@@ -56,6 +88,11 @@ char			*ft_itoab(unsigned int nbr)
 	if (nbr - p != 0)
 		i--;
 	ft_init_str(str, '0', i);
-	ft_fill_str(str, nbr, p, i);
-	return (str);
+	ft_fill_str(str, nbr, p, i);*/
+	return (bin);
+}
+
+int main()
+{
+	printf("%s\n", ft_itoab(24));
 }
