@@ -6,7 +6,7 @@
 #    By: mmouhssi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 09:06:02 by mmouhssi          #+#    #+#              #
-#*   Updated: 2016/05/14 16:58:43 by mmouhssi         ###   ########.fr       *#
+#*   Updated: 2016/06/19 17:34:32 by mmouhssi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRC =   ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c          \
 	ft_ahtoi.c ft_free_tab.c ft_abs.c ft_put_error.c ft_init_str.c        \
 	ft_itoab.c ft_itoah.c ft_itoao.c ft_sizebyte.c ft_putwchar.c          \
 	ft_putwstr.c ft_lltoa.c ft_lltoao.c ft_lltoah.c ft_putnwstr.c         \
-	ft_putnstr.c ft_wstrlen.c ft_sizewchar.c ft_ulltoa.c ft_wnstrlen.c    
+	ft_putnstr.c ft_wstrlen.c ft_sizewchar.c ft_ulltoa.c ft_wnstrlen.c    \
+	ft_base.c
 
 OBJ = $(SRC:.c=.o)
 

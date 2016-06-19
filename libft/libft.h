@@ -6,7 +6,7 @@
 /*   By: mmouhssi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 15:42:01 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/01 19:18:23 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/19 18:40:12 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct		s_list
 
 typedef struct		s_pos
 {
-	int				x;
+	int		x;
 	int				y;
 }					t_pos;
 
@@ -95,7 +95,8 @@ void				ft_free_tab(char **tab);
 long				ft_power(int nb, int power);
 int					ft_factorial(int nb);
 int					ft_sqrt(int nb);
-int					ft_ahtoi(char *str);
+int				ft_ahtoi(char *str);
+char				*ft_base(long long nbr, int (*val)(long long *nbr));
 char				*ft_itoab(unsigned int nbr);
 char				*ft_itoah(unsigned int nbr, int size);
 char				*ft_itoao(unsigned int nbr);
