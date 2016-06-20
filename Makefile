@@ -6,7 +6,7 @@
 #    By: mmouhssi <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 09:06:02 by mmouhssi          #+#    #+#              #
-#*   Updated: 2016/05/14 16:59:54 by mmouhssi         ###   ########.fr       *#
+#*   Updated: 2016/06/21 00:18:11 by mmouhssi         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,10 @@ LIB =   ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c          \
 	ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_putendl_tab.c ft_swap.c       \
 	ft_sqrt.c ft_power.c ft_factorial.c ft_putstr_tab.c get_next_line.c   \
 	ft_ahtoi.c ft_free_tab.c ft_abs.c ft_put_error.c ft_init_str.c        \
-	ft_itoab.c ft_itoah.c ft_itoao.c ft_sizebyte.c ft_putwchar.c          \
+	ft_lltoab.c ft_itoah.c ft_itoao.c ft_sizebyte.c ft_putwchar.c          \
 	ft_putwstr.c ft_lltoa.c ft_lltoao.c ft_lltoah.c ft_putnstr.c          \
-	ft_putnwstr.c ft_wstrlen.c ft_sizewchar.c ft_ulltoa.c ft_wnstrlen.c
+	ft_putnwstr.c ft_wstrlen.c ft_sizewchar.c ft_ulltoa.c ft_wnstrlen.c   \
+	ft_base.c
 
 PATH_LIB = libft/
 

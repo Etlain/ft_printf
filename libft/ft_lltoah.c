@@ -6,13 +6,15 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/04 22:36:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/19 18:40:50 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/20 23:51:13 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	val_hex(long long *nbr)
+
+#include <stdio.h>
+static int	val_hex(uint64_t *nbr)
 {
 	int hexa;
 
@@ -31,7 +33,7 @@ static int	val_hex(long long *nbr)
 	return (hexa);
 }
 
-static int	val_Hex(long long *nbr)
+static int	val_Hex(uint64_t *nbr)
 {
 	int hexa;
 
@@ -53,8 +55,8 @@ static int	val_Hex(long long *nbr)
 char		*ft_lltoah(unsigned long long nbr, int size)
 {
 	if (size == 1)
-		return (ft_base(nbr, val_hex));
+		return (ft_base((uint64_t)nbr, val_hex));
 	else if (size == 2)
-		return (ft_base(nbr, val_Hex));
+		return (ft_base((uint64_t)nbr, val_Hex));
 	return (NULL);
 }

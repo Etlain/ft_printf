@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 18:45:53 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/01 19:09:52 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/21 00:19:38 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char	*fill_word(char type, long long nbr)
 	else if (type == 'o' || type == 'O')
 		word = ft_lltoao(nbr);
 	else if (type == 'b')
-		word = ft_itoab((unsigned int)nbr);
+		word = ft_lltoab(nbr);
 	return (word);
 }
 

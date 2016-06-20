@@ -6,13 +6,13 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/04 22:36:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/19 17:50:05 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/20 23:46:00 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	val_bin(long long *nbr)
+static int	val_bin(unsigned long long *nbr)
 {
 	int bin;
 

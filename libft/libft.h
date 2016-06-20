@@ -6,7 +6,7 @@
 /*   By: mmouhssi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 15:42:01 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/19 18:40:12 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/20 23:57:09 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,13 @@ long				ft_power(int nb, int power);
 int					ft_factorial(int nb);
 int					ft_sqrt(int nb);
 int				ft_ahtoi(char *str);
-char				*ft_base(long long nbr, int (*val)(long long *nbr));
-char				*ft_itoab(unsigned int nbr);
+char				*ft_base(uint64_t nbr, int (*val)(uint64_t *nbr));
 char				*ft_itoah(unsigned int nbr, int size);
 char				*ft_itoao(unsigned int nbr);
 char				*ft_lltoa(long long nbr);
 char				*ft_lltoah(unsigned long long nbr, int size);
 char				*ft_lltoao(unsigned long long nbr);
+char				*ft_lltoab(unsigned long long nbr);
 char				*ft_ulltoa(unsigned long long nbr);
 int					ft_abs(int n);
 int					ft_sizebyte(long nbr);

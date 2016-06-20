@@ -6,15 +6,15 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/04 22:36:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/19 18:37:25 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/20 23:49:00 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	val_oct(long long *nbr)
+static int	val_oct(unsigned long long *nbr)
 {
-	long long octal;
+	int octal;
 
 	octal = 0;
 	if (*nbr & (long long)1)
@@ -29,5 +29,5 @@ static int	val_oct(long long *nbr)
 
 char		*ft_lltoao(unsigned long long nbr)
 {
-	return (ft_base((long long)nbr, val_oct));
+	return (ft_base(nbr, val_oct));
 }

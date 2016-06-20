@@ -1,52 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_base.c                                          :+:      :+:    :+:   */
+/*   ft_lltoab.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/04 22:36:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/20 23:34:50 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/20 23:56:10 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_zero()
+static int	val_bin(unsigned long long *nbr)
 {
-	char *bin;
+	int bin;
 
-	bin = (char *)ft_memalloc(2);
-	bin[0] = '0';
+	bin = 0;
+	if (*nbr & (long long)1)
+		bin++;
+	*nbr = *nbr >> 1;
 	return (bin);
 }
 
-char		*ft_base(uint64_t nbr, int (*val)(uint64_t *nbr))
+char		*ft_lltoab(unsigned long long nbr)
 {
-	char tab[sizeof(nbr) * 8];
-	char *bin;
-	int i;
-	int j;
-
-	if (nbr == 0)
-		return (ft_zero());
-	i = 0;
-	while (nbr != 0)
-	{
-		tab[i] = '0' + val(&nbr);
-		/*ft_putchar(tab[i]);
-		ft_putchar('\n');*/
-		i++;
-	}
-	tab[i] = '\0';
-	bin = (char *)ft_memalloc(i + 1);
-	j = 0;
-	i--;
-	while (i >= 0)
-	{
-		bin[j] = tab[i];
-		j++;
-		i--;
-	}
-	return (bin);
+	return (ft_base((long long)nbr, val_bin));
 }
