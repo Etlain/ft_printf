@@ -6,14 +6,12 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/04 22:36:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/20 23:51:13 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/21 01:03:26 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-
-#include <stdio.h>
 static int	val_hex(uint64_t *nbr)
 {
 	int hexa;
