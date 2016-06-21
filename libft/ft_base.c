@@ -6,13 +6,13 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/04 22:36:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/20 23:34:50 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/21 17:05:10 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_zero()
+static char	*ft_zero(void)
 {
 	char *bin;
 
@@ -23,10 +23,10 @@ static char	*ft_zero()
 
 char		*ft_base(uint64_t nbr, int (*val)(uint64_t *nbr))
 {
-	char tab[sizeof(nbr) * 8];
-	char *bin;
-	int i;
-	int j;
+	char	tab[sizeof(nbr) * 8];
+	char	*bin;
+	int		i;
+	int		j;
 
 	if (nbr == 0)
 		return (ft_zero());
@@ -34,8 +34,6 @@ char		*ft_base(uint64_t nbr, int (*val)(uint64_t *nbr))
 	while (nbr != 0)
 	{
 		tab[i] = '0' + val(&nbr);
-		/*ft_putchar(tab[i]);
-		ft_putchar('\n');*/
 		i++;
 	}
 	tab[i] = '\0';

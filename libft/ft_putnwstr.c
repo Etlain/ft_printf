@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 16:03:28 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/01 19:21:32 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/21 19:03:18 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	ft_nbroctet(wchar_t c)
 {
 	int nb;
 
-	nb = ft_sizebyte((long)c);
+	nb = ft_sizebyte(c);
 	if (nb < 8)
 		return (1);
 	else if (nb < 12)

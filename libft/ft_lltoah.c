@@ -6,7 +6,7 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/04 22:36:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/06/21 01:03:26 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/21 16:58:45 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	val_hex(uint64_t *nbr)
 	return (hexa);
 }
 
-static int	val_Hex(uint64_t *nbr)
+static int	val_hex2(uint64_t *nbr)
 {
 	int hexa;
 
@@ -55,6 +55,6 @@ char		*ft_lltoah(unsigned long long nbr, int size)
 	if (size == 1)
 		return (ft_base((uint64_t)nbr, val_hex));
 	else if (size == 2)
-		return (ft_base((uint64_t)nbr, val_Hex));
+		return (ft_base((uint64_t)nbr, val_hex2));
 	return (NULL);
 }

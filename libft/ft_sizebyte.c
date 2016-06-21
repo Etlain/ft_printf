@@ -6,11 +6,13 @@
 /*   By: mmouhssi <mmouhssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 21:49:14 by mmouhssi          #+#    #+#             */
-/*   Updated: 2016/04/19 22:38:45 by mmouhssi         ###   ########.fr       */
+/*   Updated: 2016/06/21 19:02:43 by mmouhssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_sizebyte(long nbr)
+#include "libft.h"
+
+int	ft_sizebyte(uint64_t nbr)
 {
 	int size;
 
